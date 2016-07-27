@@ -37,6 +37,8 @@
 (package-initialize)
 
 
+;ctrl-uをevilに食わす
+(setq-default evil-want-C-u-scroll t)
 (require 'evil)
 (evil-mode 1)
 (require 'evil-search-highlight-persist)
@@ -46,6 +48,7 @@
 
 (add-to-list 'load-path (file-name-as-directory "~/.emacs.d/myel"))
 (require 'evil-mode-line)
+
 
 
 (require 'auto-complete)
@@ -121,8 +124,9 @@
 (setq recentf-auto-cleanup 'never)             ;; 保存する内容を整理
 (run-with-idle-timer 30 t '(lambda ()          ;; 30秒ごとに .recentf を保存
    (with-suppressed-message (recentf-save-list))))
-(require 'recentf-ext)
-(global-set-key "\C-c\M-r" 'recentf-open-files)
+;(require 'recentf-ext)
+;(global-set-key "\C-c\M-r" 'recentf-open-files)
+(global-set-key "\C-c\M-r" 'helm-recentf)
 
 (global-evil-tabs-mode t)
 
