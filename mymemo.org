@@ -1,0 +1,50 @@
+#+STARTUP: indent inlineimages
+TAB 見出しを閉じたり開いたり
+手入力する場合は"*"の後にspaceを入れると認識される
+
+* リンク
+"[["と
+"]]"でくくる。中身は file:aaa.jpg と書く
+[[http://localhost:52617/Content/glassicon.png]]
+C-c C-l でリンクを貼るほうが楽です。 
+* コードの断片
+(get-char-property (point) 'face)
+TAB 見出しを閉じたり開いたり
+手入力する場合は"*"の後にspaceを入れると認識される
+
+* キーマップ
+  M-RET   見出し
+  M-RIGHT 重要に
+  M-LEFT  簡単に
+* みだしで
+  C-C C-T TODO
+* TODOで
+  S-RIGHT ステータスが進む
+  S-LEFT  ステータスが戻る
+  S-UP    重要度（まだ）
+  S-DOWN  重要度（まだ）
+  M-UP    １つ上の見出しと入れ替える
+  M-DOWN  １つ下の見出しと入れ替える
+* TABLE
+"|"で列を区切って書いた後（閉じる"|"も忘れずに）、TABで整形してくれる
+また、行の最後でTABで次の行を作ってくれる。
+列幅が大きくなってもTAB、列を移動するときTAB。
+
+"|-"とTABで区切り線
+
+（C-c C-cでも一気に整形してくれるみたい）
+
+|-----+-----|
+| aaa | bbb |
+|-----+-----|
+|     |     |
+|     |     |
+* リスト
+"- "で始まりワードが続く
+M-RETで次の見出し
+M-矢印で移動
+
+- aaa
+  - bbb
+    - @@@ 
+  - ccc

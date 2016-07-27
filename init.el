@@ -239,6 +239,7 @@
 
 ;;;;めもです
 (define-key global-map (kbd "C-c j") (lambda ()(interactive)(find-file "~/todo.org")))
+(define-key global-map (kbd "C-c p j") (lambda ()(interactive)(find-file "~/.emacs.d/mymemo.org")))
 
 ;;;;org関連
 (require 'org)
