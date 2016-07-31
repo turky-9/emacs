@@ -265,12 +265,15 @@ you should place your code here."
                              ac-source-filename
                              ))
   (add-to-list 'ac-modes 'typescript-mode)
+  (define-key ac-mode-map (kbd "C-u TAB") 'auto-complete)
   ;(require 'tss)
   ;(tss-config-default)
 
   (require 'ac-slime)
   (add-hook 'slime-mode-hook 'set-up-slime-ac)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+
+  (define-key global-map (kbd "<C-tab>") 'other-window)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
