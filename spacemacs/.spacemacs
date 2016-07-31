@@ -258,6 +258,16 @@ you should place your code here."
   (global-auto-complete-mode t)
   (define-key ac-completing-map (kbd "C-n") 'ac-next)      ; C-nで次候補選択
   (define-key ac-completing-map (kbd "C-p") 'ac-previous)  ; C-pで前候補選択
+
+  (setq-default ac-sources '(
+                             ac-source-words-in-all-buffer
+                             ac-source-words-in-buffer
+                             ac-source-filename
+                             ))
+  (add-to-list 'ac-modes 'typescript-mode)
+  ;(require 'tss)
+  ;(tss-config-default)
+
   (require 'ac-slime)
   (add-hook 'slime-mode-hook 'set-up-slime-ac)
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
