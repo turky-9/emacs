@@ -1,0 +1,107 @@
+
+"Y.Ueno
+"半角文字の設定
+set guifont=MS_Gothic:h9
+
+"全角文字の設定
+set guifontwide=MS_Gothic:h9
+
+let g:save_window_file = expand('~/.vimwinpos')
+augroup SaveWindow
+  autocmd!
+  autocmd VimLeavePre * call s:save_window()
+  function! s:save_window()
+    let options = [
+      \ 'set columns=' . &columns,
+      \ 'set lines=' . &lines,
+      \ 'winpos ' . getwinposx() . ' ' . getwinposy(),
+      \ ]
+    call writefile(options, g:save_window_file)
+  endfunction
+augroup END
+
+if filereadable(g:save_window_file)
+  execute 'source' g:save_window_file
+endif
+
+set nowrap
+
+colorscheme murphy
+
+"横スクロールバー
+set guioptions+=b
+
+"検索結果の強調表示
+hi Search guifg=Black guibg=Yellow
+
+"set encoding=utf-8
+
+
+"バックアップファイルを作成しない
+set nobackup
+
+"UNDOファイルを作らない
+set noundofile
+
+source $VIMRUNTIME/mswin.vim
+
+let mapleader="\<Space>"
+nnoremap <Leader>t :tabnew<CR>
+nnoremap <Leader>h :-tabmove<CR>
+nnoremap <Leader>l :+tabmove<CR>
+nnoremap <Leader>r :MRU<CR>
+nnoremap <Leader>m :vsp $HOME/memo.txt<CR>
+nnoremap <Leader>s :call YwuSendNewTab()<CR>
+nnoremap <Leader>c :call YuDoComment()<CR>
+nnoremap <Leader>eu :e! ++enc=utf-8<CR>
+nnoremap <Leader>ec :e! ++enc=cp932<CR>
+
+inoremap <ESC> <ESC>:set iminsert=0<CR>
+" ESCでIMEを確実にOFF
+
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set autochdir
+
+set iminsert=0
+"空白行を削除
+nnoremap <Leader>emp :%g/^[ \t]*$/d<CR>
+set textwidth=0
+
+
+let g:netrw_altv=1
+let g:netrw_alto=1
+
+vnoremap * y/<C-R>"<CR>
+
+:map <silent> <F3> :call BufferList()<CR>
+
+au BufNewFile,BufRead *.PRC setf sql
+set tags+=./tags;
+
+"kaoriya版のため
+source $VIMRUNTIME\plugin\ueno\mru.vim.source.later
+
+function YwuSendNewTab()
+  let l:str = bufnr("%")
+  exec ":tablast"
+  exec ":tabnew"
+  exec ":b" . l:str
+endfunction
+
+
+function YuDoComment()
+  syntax match yuComment1 /\/\/.*$/
+  syntax match yuComment2 /--.*$/
+  highlight link yuComment1 Comment
+  highlight link yuComment2 Comment
+endfunction
+
+
+
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
+let g:previm_open_cmd='chrome' 
