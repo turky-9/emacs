@@ -274,7 +274,62 @@ you should place your code here."
   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
   (define-key global-map (kbd "<C-tab>") 'other-window)
+
+  (global-linum-mode t)
+  (global-set-key "\C-c\C-r" 'my-window-resizer)
+
+  ;;折り返さない
+  (setq-default truncate-partial-width-windows t)
+  (setq-default truncate-lines t)
+
+  ;;めもです
+  (define-key global-map (kbd "C-c j") (lambda ()(interactive)(find-file "~/todo.org")))
+  (define-key global-map (kbd "C-c p j") (lambda ()(interactive)(find-file "~/.emacs.d/mymemo.org")))
+
+  ;;org関連
+  (require 'org)
+  (setq org-fast-todo-selection t)
+  ;(setq org-todo-keywords
+  ;      '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "Done(x)" "CANCEL(c)")))
+  (setq org-todo-keywords
+        '((sequence "TODO" "STARTED" "WAITING" "|" "Done" "CANCEL")))
+
   )
+(defun my-window-resizer ()
+  "Control window size and position."
+  (interactive)
+  (let ((window-obj (selected-window))
+        (current-width (window-width))
+        (current-height (window-height))
+        (dx (if (= (nth 0 (window-edges)) 0) 1
+              -1))
+        (dy (if (= (nth 1 (window-edges)) 0) 1
+              -1))
+        action c)
+    (catch 'end-flag
+      (while t
+        (setq action
+              (read-key-sequence-vector (format "size[%dx%d]"
+                                                (window-width)
+                                                (window-height))))
+        (setq c (aref action 0))
+        (cond ((= c ?l)
+               (enlarge-window-horizontally dx))
+              ((= c ?h         )
+               (shrink-window-horizontally dx))
+              ((= c ?k)
+               (enlarge-window dy))
+              ((= c ?j)
+               (shrink-window dy))
+	      ;; otherwise
+              (t
+               (let ((last-command-char (aref action 0))
+                     (command (key-binding action)))
+                 (when command
+                   (call-interactively command)))
+               (message "Quit")
+               (throw 'end-flag t)))))))
+
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
