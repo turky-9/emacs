@@ -43,7 +43,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(ddskk ac-slime)
+   dotspacemacs-additional-packages '(ddskk ac-slime howm)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(company)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -71,7 +71,7 @@ values."
    dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. (default t)
-   dotspacemacs-check-for-update t
+   dotspacemacs-check-for-update nil
    ;; One of `vim', `emacs' or `hybrid'. Evil is always enabled but if the
    ;; variable is `emacs' then the `holy-mode' is enabled at startup. `hybrid'
    ;; uses emacs key bindings for vim's insert mode, but otherwise leaves evil
@@ -284,7 +284,7 @@ you should place your code here."
 
   ;;めもです
   (define-key global-map (kbd "C-c j") (lambda ()(interactive)(find-file "~/todo.org")))
-  (define-key global-map (kbd "C-c p j") (lambda ()(interactive)(find-file "~/.emacs.d/mymemo.org")))
+  (define-key global-map (kbd "C-c k") (lambda ()(interactive)(find-file "~/.emacs.d/mymemo.org")))
 
   ;;org関連
   (require 'org)
@@ -294,6 +294,14 @@ you should place your code here."
   (setq org-todo-keywords
         '((sequence "TODO" "STARTED" "WAITING" "|" "Done" "CANCEL")))
 
+  (load-theme 'tsdh-dark t)
+  (add-to-list 'custom-theme-load-path (file-name-as-directory "~/.emacs.d/mycolor"))
+  (setq-default line-spacing 2)
+  (set-frame-font "ＭＳ ゴシック-9")
+
+  (require 'howm)
+  (setq howm-file-name-format "%Y/%m/%Y_%m_%d.org") ; 1 日 1 ファイル
+  (setq howm-keyword-case-fold-search t) ; <<< で大文字小文字を区別しない
   )
 (defun my-window-resizer ()
   "Control window size and position."
@@ -333,3 +341,17 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#000000" :foreground "#60ba60" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "outline" :family "ＭＳ ゴシック"))))
+ '(font-lock-keyword-face ((t (:foreground "gold" :weight normal))))
+ '(font-lock-string-face ((t (:foreground "gainsboro")))))

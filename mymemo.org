@@ -2,6 +2,8 @@
 TAB 見出しを閉じたり開いたり
 手入力する場合は"*"の後にspaceを入れると認識される
 
+* info
+ntemacsだとgzipが無いって怒こられる。windows版があるのでbinフォルダに入れる。
 * リンク
 "[["と
 "]]"でくくる。中身は file:aaa.jpg と書く
@@ -48,3 +50,20 @@ M-矢印で移動
   - bbb
     - @@@ 
   - ccc
+* FACE
+- カーソル位置のフェイスを調べる 
+  - M-x describe-faceでカーソル位置のフェースが分かる（default表示される）
+- フェイスの設定を修正する
+  - M-x list-faces-display でフェイスの一覧ウィンドウが出るので、 修正したいフェイスを選んで RET
+- 設定を反映させる
+  - 「Set for current session」にカーソルを当てて RET を押すと、一時的に設定を反映させた状態になる
+- 設定を保存する
+  - 「Save for future sessions」を選んで RET を押すと設定が.spacemacs(or .init.el?)に保存される
+* howmの設定
+(define-key global-map [katakana] 'howm-menu) ; [カタカナ] キーでメニュー
+(setq howm-file-name-format "%Y/%m/%Y_%m_%d.txt") ; 1 日 1 ファイル
+(setq howm-keyword-case-fold-search t) ; <<< で大文字小文字を区別しない
+(setq howm-list-title nil) ; 一覧時にタイトルを表示しない
+(setq howm-menu-refresh-after-save nil) ; save 時にメニューを自動更新せず
+(setq howm-refresh-after-save nil) ; save 時に下線を引き直さない
+(setq howm-menu-expiry-hours 2) ; メニューを 2 時間キャッシュ
