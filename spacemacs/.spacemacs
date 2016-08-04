@@ -302,6 +302,30 @@ you should place your code here."
   (require 'howm)
   (setq howm-file-name-format "%Y/%m/%Y_%m_%d.org") ; 1 日 1 ファイル
   (setq howm-keyword-case-fold-search t) ; <<< で大文字小文字を区別しない
+
+  ;;evilにeyebrowseのコマンドをexとして登録する
+  (eval-after-load 'evil-ex '(progn
+                              (evil-ex-define-cmd "taba" 'eyebrowse-switch-to-window-config-1)
+                              (evil-ex-define-cmd "tabb" 'eyebrowse-switch-to-window-config-2)
+                              (evil-ex-define-cmd "tabc" 'eyebrowse-switch-to-window-config-3)
+                              (evil-ex-define-cmd "tabd" 'eyebrowse-switch-to-window-config-4)
+                              (evil-ex-define-cmd "tabe" 'eyebrowse-switch-to-window-config-5)
+                              (evil-ex-define-cmd "tabf" 'eyebrowse-switch-to-window-config-6)
+                              (evil-ex-define-cmd "tabg" 'eyebrowse-switch-to-window-config-7)
+                              (evil-ex-define-cmd "tabh" 'eyebrowse-switch-to-window-config-8)
+                              (evil-ex-define-cmd "tabo" 'eyebrowse-switch-to-window-config-9)
+                              (evil-ex-define-cmd "tabh" 'eyebrowse-switch-to-window-config-0)
+                              (evil-ex-define-cmd "tabl" 'eyebrowse-switch-to-window-config)))
+
+  ;;起動時の設定
+  (eyebrowse-switch-to-window-config-0)
+  (howm-menu)
+  (eyebrowse-switch-to-window-config-9)
+  (find-file "~/todo.org")
+  (split-window-below)
+  (other-window)
+  (find-file "~/.emacs.d/mymemo.org")
+  (eyebrowse-switch-to-window-config-1)
   )
 (defun my-window-resizer ()
   "Control window size and position."
