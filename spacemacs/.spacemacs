@@ -318,14 +318,15 @@ you should place your code here."
                               (evil-ex-define-cmd "tabl" 'eyebrowse-switch-to-window-config)))
 
   ;;起動時の設定
-  (eyebrowse-switch-to-window-config-0)
-  (howm-menu)
   (eyebrowse-switch-to-window-config-9)
   (find-file "~/todo.org")
-  (split-window-below)
-  (other-window)
+
+  (let ((win (split-window-below)))
+    (select-window win))
   (find-file "~/.emacs.d/mymemo.org")
-  (eyebrowse-switch-to-window-config-1)
+
+  (eyebrowse-switch-to-window-config-0)
+  (howm-menu)
   )
 (defun my-window-resizer ()
   "Control window size and position."
