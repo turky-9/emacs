@@ -5,7 +5,8 @@
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
-values."
+values.
+"
   (setq-default
    ;; Base distribution to use. This is a layer contained in the directory
    ;; `+distribution'. For now available distributions are `spacemacs-base'
@@ -43,7 +44,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(ddskk ac-slime howm)
+   dotspacemacs-additional-packages '(ac-slime howm dired-toggle dired+ graphviz-dot-mode tide
+                                               ace-jump-mode calfw calfw-ical japanese-holidays calfw-howm
+                                               ox-reveal dired-ranger calfw-org hiwin)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(company)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -99,7 +102,7 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         monokai
+                         tsdh-dark
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
@@ -153,7 +156,7 @@ values."
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
    ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
+   dotspacemacs-auto-save-fle-location 'cache
    ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
@@ -244,6 +247,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
+  (load-theme 'tsdh-dark t)
   )
 
 (defun dotspacemacs/user-config ()
@@ -255,6 +259,13 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq inferior-lisp-program "/usr/local/bin/clisp")
 
+  (add-hook 'typescript-mode-hook
+            (lambda ()
+              (tide-setup)
+              (flycheck-mode +1)
+              (setq flycheck-check-syntax-automatically '(save mode-enabled))
+              (define-key tide-mode-map (kbd "g D") 'tide-jump-to-definition)
+              ))
   (global-auto-complete-mode t)
   (define-key ac-completing-map (kbd "C-n") 'ac-next)      ; C-nで次候補選択
   (define-key ac-completing-map (kbd "C-p") 'ac-previous)  ; C-pで前候補選択
@@ -264,6 +275,10 @@ you should place your code here."
                              ac-source-words-in-buffer
                              ac-source-filename
                              ))
+  (setq-default ac-auto-start 3)                ;補完開始文字数
+  (setq-default ac-delay 0.05)                  ;補完処理開始
+  (setq-default ac-auto-show-menu 0.2)          ;補完候補表示
+  (setq-default ac-quick-help-delay 0.5)        ;クィックヘルプ表示
   (add-to-list 'ac-modes 'typescript-mode)
   (define-key ac-mode-map (kbd "C-u TAB") 'auto-complete)
   ;(require 'tss)
@@ -283,8 +298,8 @@ you should place your code here."
   (setq-default truncate-lines t)
 
   ;;めもです
-  (define-key global-map (kbd "C-c j") (lambda ()(interactive)(find-file "~/todo.org")))
-  (define-key global-map (kbd "C-c k") (lambda ()(interactive)(find-file "~/.emacs.d/mymemo.org")))
+  (define-key global-map (kbd "C-c t d") (lambda ()(interactive)(find-file "~/todo.org")))
+  (define-key global-map (kbd "C-c m") (lambda ()(interactive)(find-file "~/.emacs.d/mymemo.org")))
 
   ;;org関連
   (require 'org)
@@ -294,13 +309,12 @@ you should place your code here."
   (setq org-todo-keywords
         '((sequence "TODO" "STARTED" "WAITING" "|" "Done" "CANCEL")))
 
-  (load-theme 'tsdh-dark t)
-  (add-to-list 'custom-theme-load-path (file-name-as-directory "~/.emacs.d/mycolor"))
+  ;;(add-to-list 'custom-theme-load-path (file-name-as-directory "~/.emacs.d/mycolor"))
   (setq-default line-spacing 2)
   (set-frame-font "ＭＳ ゴシック-9")
 
   (require 'howm)
-  (setq howm-file-name-format "%Y/%m/%Y_%m_%d.org") ; 1 日 1 ファイル
+  (setq howm-file-name-format "%Y/%m/%Y_%m_%d_%H%M%S.org") ; 1 日 1 ファイル
   (setq howm-keyword-case-fold-search t) ; <<< で大文字小文字を区別しない
 
   ;;evilにeyebrowseのコマンドをexとして登録する
@@ -313,20 +327,256 @@ you should place your code here."
                               (evil-ex-define-cmd "tabf" 'eyebrowse-switch-to-window-config-6)
                               (evil-ex-define-cmd "tabg" 'eyebrowse-switch-to-window-config-7)
                               (evil-ex-define-cmd "tabh" 'eyebrowse-switch-to-window-config-8)
-                              (evil-ex-define-cmd "tabo" 'eyebrowse-switch-to-window-config-9)
-                              (evil-ex-define-cmd "tabh" 'eyebrowse-switch-to-window-config-0)
+                              (evil-ex-define-cmd "tabt" 'eyebrowse-switch-to-window-config-9)
+                              (evil-ex-define-cmd "tabm" 'eyebrowse-switch-to-window-config-0)
                               (evil-ex-define-cmd "tabl" 'eyebrowse-switch-to-window-config)))
 
+  (require 'dired+)
+  (setq diredp-hide-details-initially-flag t)
+
+  (add-to-list 'load-path (file-name-as-directory "~/.emacs.d/myel"))
+  (require 'ox-qmd)
+
+  ;;emacs-lisp用
+  ;;tooltipでヘルプを表示
+  (defun my-e-doc (symbol)
+    (or (ignore-errors (documentation symbol))
+        (ignore-errors (documentation-property symbol 'variable-documentation))))
+  (defun doc-at-point ()
+    (interactive)
+    (let* ((symbol (symbol-at-point))
+           (doc (my-e-doc symbol)))
+      (when (and doc (null popup-instances))
+        (popup-tip doc :margin t))))
+  ;;evalにedocとしてexコマンド登録
+  (eval-after-load 'evil-ex '(evil-ex-define-cmd "edoc" 'doc-at-point))
+
+
+  ;;辞書をポップアップしたい
+  (defun mydic (b e)
+    (interactive "r")
+    (if (and (region-active-p) (>= (- e b) 2))
+        (popup-tip (concat " " (buffer-substring b e) " "))
+      (popup-tip "not found")))
+
+  (defun w32-browser (doc) (w32-shell-execute 1 doc))
+  (eval-after-load "dired" '(define-key dired-mode-map [f3]
+                              (lambda ()
+                                (interactive)
+                                (w32-browser (dired-replace-in-string "/" "\\" (dired-get-filename))))))
+
+  ;;popupメニュー
+  (define-key popup-menu-keymap (kbd "C-l") 'popup-open)
+  (define-key popup-menu-keymap (kbd "C-h") 'popup-close)
+  (defun mypopup ()
+    "test of popup-menu"
+    (interactive)
+    (let ((m (popup-cascade-menu '(Conemu-Here Explorer Close) )))
+      (cond ((eq m 'Conemu-Here)
+             (let ((x (file-name-directory (buffer-file-name))))
+               (w32-shell-execute "open" "conemu" (concat "-dir " (file-name-directory (buffer-file-name))))))
+            ((eq m 'Explorer)
+             (let ((x (file-name-directory (buffer-file-name))))
+               (explorer x))))))
+  (eval-after-load 'evil-ex '(evil-ex-define-cmd "pop" 'mypopup))
+
+  (defun my-gvim-on-dired ()
+    "open gvim from dired"
+    (interactive)
+    (let ((f (dired-get-filename)))
+      ;;NTEmacsとvimで$HOMEが異なるので_gvimrcを指定して開く
+      (w32-shell-execute "open" "gvim" (concat "-U ~/../../_gvimrc " f))
+      ))
+  (eval-after-load 'evil-ex '(evil-ex-define-cmd "vim" 'my-gvim-on-dired))
+
+
+  ;;以下メモ
+  ;;(buffer-file-name)
+  ;;(directory-file-name (buffer-file-name))
+  ;;(file-name-directory (buffer-file-name))
+
+  ;;空ファイルを作成する
+  (defun mytouch (fname)
+    "create empty file using touch.bat"
+    (interactive "sInput File Name:")
+    (if (< 0 (length fname))
+        (progn (start-process "mytouch" nil "c:\\ueno\\touch.cmd" fname)
+               (revert-buffer))))
+
+  ;;Dired/nameのnormalステートのキーを上書く
+  (evil-define-key 'normal dired-mode-map (kbd "c") #'mytouch)
+  (evil-define-key 'normal dired-mode-map (kbd "i") #'dired-hide-details-mode)
+  (evil-define-key 'normal dired-mode-map (kbd "g t") #'eyebrowse-next-window-config)
+  (evil-define-key 'normal dired-mode-map (kbd "g T") #'eyebrowse-prev-window-config)
+
   ;;起動時の設定
-  (eyebrowse-switch-to-window-config-0)
-  (howm-menu)
   (eyebrowse-switch-to-window-config-9)
   (find-file "~/todo.org")
-  (split-window-below)
-  (other-window)
+  (let ((win (split-window-below)))
+     (select-window win))
   (find-file "~/.emacs.d/mymemo.org")
-  (eyebrowse-switch-to-window-config-1)
+  (eyebrowse-switch-to-window-config-0)
+  (howm-menu)
+
+  (setq org-agenda-files (list "~/todo.org"))
+
+  ;; plantuml.jarへのパスを設定
+  ;; あと、dotの場所PATH or 下記環境変数で指定する
+  ;; set GRAPHVIZ_DOT=C:\ueno\tool\graphviz\bin\dot.exe
+  (setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml.jar")
+
+  ;;babel実行時に確認を求めない
+  (setq org-confirm-babel-evaluate nil)
+
+  ;;babel言語の設定
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((dot . t)(mermaid . t)(plantuml . t)))
+
+  ;;evil-normal stateでIMEをOFFする
+  (add-hook 'evil-normal-state-entry-hook 'ime-force-off)
+
+  ;;exploreを開く
+  (defun explorer (&optional path)
+    "引数があれば引数の、省略されていれば現在のバッファをexplorerで開く"
+    (interactive)
+    (setq path (expand-file-name (or path (buffer-file-name))))
+    (cond
+     ((not (file-exists-p path))
+      (message "path %s isn't exist" path))
+     (t
+      (let ((dos-path (replace-regexp-in-string "/" "\\\\" path)))
+        ;;(w32-shell-execute "open" "explorer.exe" (concat "/select," dos-path))))))
+        (w32-shell-execute "open" "explorer.exe" dos-path)))))
+
+  ;;diredから
+  (defun dired-exec-explorer ()
+    "In dired, execute Explorer"
+    (interactive)
+    (explorer (dired-current-directory)))
+  ;;key map
+  (define-key dired-mode-map (kbd "C-c e") 'dired-exec-explorer)
+
+  (defun my-new-frame-and-view ()
+    (let* ((x (dired-get-filename))
+          (w (frame-width))
+          (h (frame-height))
+          (f (new-frame `((width . ,w) (height . ,h)))))
+          ))
+  
+
+  (define-key dired-mode-map (kbd "C-c o") 'my-new-frame-and-view)
+
+  ;;拡張子に対するモードの指定
+  (add-to-list 'auto-mode-alist '("\\.PRC\\'" . sql-mode))
+
+  (add-hook 'sql-mode-hook 'my-tag-set)
+  (defun my-tag-set ()
+    (let ((tagpath (my-find-tags (buffer-file-name))))
+      (if (file-exists-p tagpath) (setq tags-file-name tagpath))))
+
+  (defun my-find-tags (path)
+    (let ((dir (file-name-as-directory path))
+          (prev "")
+          (ret nil))
+      (while (not (string= dir prev))
+        (if (file-exists-p (concat dir "etags"))
+            (setq ret (concat dir "etags")
+                  dir prev)
+            (setq prev dir
+                  dir (file-name-directory (directory-file-name dir)))))
+      ret))
+
+  ;;(file-name-as-directory "c:\\temp") -> 末尾に区切り文字を付ける
+  ;;(directory-file-name "c:\\temp\\") -> 末尾の区切り文字を消す
+  ;;(file-name-directory "c:\\temp\\aaa") -> 親ディレクトリを返す(末尾に区切り文字付)
+
+  ;;日本の休日
+  (eval-after-load "holidays"
+    '(progn
+       (require 'japanese-holidays)
+       (setq calendar-holidays ; 他の国の祝日も表示させたい場合は適当に調整
+             (append japanese-holidays holiday-local-holidays holiday-other-holidays))
+       (setq mark-holidays-in-calendar t) ; 祝日をカレンダーに表示
+       ;; 土曜日・日曜日を祝日として表示する場合、以下の設定を追加します。
+       ;; デフォルトで設定済み
+       (setq japanese-holiday-weekend '(0 6)     ; 土日を祝日として表示
+             japanese-holiday-weekend-marker     ; 土曜日を水色で表示
+             '(holiday nil nil nil nil nil japanese-holiday-saturday))
+       (add-hook 'calendar-today-visible-hook 'japanese-holiday-mark-weekend)
+       (add-hook 'calendar-today-invisible-hook 'japanese-holiday-mark-weekend)))
+
+  ;;“きょう”をマークするには以下の設定を追加します。
+  (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+
+  (require 'dired-ranger)
+  ;;このアクションから始まる(コピー)
+  (define-key dired-mode-map (kbd "C-c c") 'dired-ranger-copy)
+
+  ;;コピーした後に移動
+  (define-key dired-mode-map (kbd "C-c x") 'dired-ranger-move)
+  ;;コピーした後に貼り付け
+  (define-key dired-mode-map (kbd "C-c v") 'dired-ranger-paste)
+
+
+  (require 'ox-reveal)
+  (require 'ace-jump-mode)
+  (define-key global-map (kbd "C-c j") 'ace-jump-mode)
+  (evil-define-key 'normal global-map (kbd "s") #'ace-jump-mode)
+
+  (require 'url-http)
+  (require 'calfw)
+  (require 'calfw-ical)
+  ;;(require 'calfw-howm)
+  (require 'calfw-org)
+  (setq cfw:ical-calendar-external-shell-command "MyWGet -u nmoc\\8010973 -p CatsVer302 ")
+  (setq cfw:ical-url-to-buffer-get 'cfw:ical-url-to-buffer-external)
+  ;;(setq cfw:ical-url-to-buffer-get 'cfw:ical-url-to-buffer-internal)
+  ;; 月
+  (setq calendar-month-name-array
+        ["１月" "２月" "３月" "４月" "５月" "６月"
+         "７月" "８月" "９月" "１０月" "１１月" "１２月"])
+
+  ;; 曜日
+  (setq calendar-day-name-array
+        ["日曜日" "月曜日" "火曜日" "水曜日" "木曜日" "金曜日" "土曜日"])
+
+  ;; 週の先頭の曜日
+  (setq calendar-week-start-day 0) ; 日曜日は0, 月曜日は1
+
+  (require 'hiwin)
+  (hiwin-activate)
+  (set-face-background 'hiwin-face "#222222")
+
+  (require 'yasnippet)
+  (yas-global-mode 1)
+  (define-key global-map (kbd "C-c y") 'yas-insert-snippet)
+
+  ;;(yas-insert-snippet)
+  ;;(yas-new-snippet)
+  ;;(yas-visit-snippet-file)
+  ;;(require 'helm-migemo)
+  ;; ================================================================
+  ;; end ofdotspacemacs/user-config 
+  ;; ================================================================
   )
+
+;; (cfw:ical-data-cache-clear-all)
+(defun my-open-cal ()
+  (interactive)
+  (cfw:open-calendar-buffer
+   :contents-sources
+   (list
+    (cfw:org-create-source "Green")  ; orgmode source
+    ;;(cfw:howm-create-source "Blue")  ; howm source
+    ;;(cfw:cal-create-source "Orange") ; diary source
+    ;;(cfw:ical-create-source "gcal" "~/basic.ics" "Gray")  ; ICS source1
+    (cfw:ical-create-source "gcal" "https://calendar.google.com/calendar/ical/ueno.denshi.kobo%40gmail.com/private-6366861ff1b9ef34ec2265ad65e4465a/basic.ics" "Gray")  ; ICS source1
+    ;;(cfw:ical-create-source "gcal" "https://..../basic.ics" "IndianRed") ; google calendar ICS)
+    )))
+  ;;(cfw:open-ical-calendar "https://calendar.google.com/calendar/ical/ueno.denshi.kobo%40gmail.com/private-6366861ff1b9ef34ec2265ad65e4465a/basic.ics"))
+  ;;(cfw:open-ical-calendar "file:///c:/temp/basic.ics"))
+
 (defun my-window-resizer ()
   "Control window size and position."
   (interactive)
@@ -370,7 +620,9 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(package-selected-packages
+   (quote
+    (hiwin calfw-org dired-ranger ox-reveal calfw-howm japanese-holidays calfw-ical calfw ace-jump-mode ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package tss toc-org tide spacemacs-theme spaceline smooth-scrolling restart-emacs rainbow-delimiters quelpa popwin persp-mode pcre2el paradox page-break-lines org-repo-todo org-present org-pomodoro org-plus-contrib org-bullets open-junk-file neotree move-text lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete htmlize howm hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag graphviz-dot-mode google-translate golden-ratio gnuplot flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav dired-toggle dired+ define-word company-statistics company-quickhelp clean-aindent-mode buffer-move bracketed-paste auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-slime ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
