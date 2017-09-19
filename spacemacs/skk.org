@@ -1,0 +1,35 @@
+* install
+list-package
+-> ddskk
+
+* setup
+(global-set-key (kbd "C-c C-j") 'skk-mode)
+
+* キー操作
+|------+----------+--------+---------------------|
+| キー | そうさ   | もどる | list                |
+|------+----------+--------+---------------------|
+| q    | カタカナ |        | skk-toggle-kana     |
+| C-q  | 半角カナ |        | skk-toggle-katakana |
+| l    | 英数     | C-j    |                     |
+|------+----------+--------+---------------------|
+
+* lisp
+skk-toggle-kutouten
+
+
+* 変換
+Shiftキーで変換候補を入力、入力後にSPACEで変換
+Returnキーは要らない
+
+* google ime
+** install
+gem install google-ime-skk
+** setup
+#+BEGIN_SRC elisp
+(setq skk-server-prog "/usr/local/bin/google-ime-skk") ; google-ime-skkの場所
+(setq skk-server-inhibit-startup-server nil) ; 辞書サーバが起動していなかったときに Emacs からプロセスを立ち上げる 
+(setq skk-server-host "localhost") ; サーバー機能を利用
+(setq skk-server-portnum 55100)     ; ポートはgoogle-ime-skk
+(setq skk-share-private-jisyo t)   ; 複数 skk 辞書を共有
+#+END_SRC
