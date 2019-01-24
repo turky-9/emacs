@@ -1,0 +1,17 @@
+cd \ueno
+cd /ueno
+cd src
+ls dotnet/
+cd dotnet
+ls ang1/
+mkdir RoslynCore
+cd RoslynCore/
+dotnet --help
+cd ..\..
+cd ../
+cd angular/
+ls
+cd foo
+ls
+ng build --watch
+exit

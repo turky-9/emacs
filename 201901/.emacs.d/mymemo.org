@@ -1,0 +1,236 @@
+#+STARTUP: indent inlineimages
+* align-regexp
+M-x align-regexp -> =とかの文字
+* gvimとemacsのHOMEの違い
+|-------+----------------------------|
+| emacs | users\name\AppData\Roaming |
+| vim   | users\name\                |
+|-------+----------------------------|
+なのでAppData\Roamingにシンボリックリンクを作成
+（ショートカットじゃないよ)
+AppData\Roamingにて
+#+BEGIN_SRC bat
+mklink _vimrc ..\..\_vimrc
+mklink _gvimrc ..\..\_gvimrc
+#+END_SRC
+
+いろいろ面倒くさいのでWindowsに環境変数"HOME"を定義した
+set HOME=%USERPROFILE%
+* 自分のコマンド
+- mypopup
+  - conemu
+  - explorer
+- diredでF3
+** dired
+*** installed
+- dired+
+- dired-toggle
+*** キー
+| key | desc                  |
+|-----+-----------------------|
+| (   | 詳細表示をトグル      |
+| o   | 別のwindowで開く      |
+| m   | mark                  |
+| u   | unmark                |
+| U   | unmark all            |
+| D   | delete marked         |
+| C   | copy marked           |
+| C   | move or rename marked |
+| +   | create dire           |
+| r   | redisplay             |
+
+
+* コメントアウト
+行を選択してM-;
+* surround
+** 囲う
+visual modeで選択してS'とか(大文字な事に注意)
+タグの場合はSに続けて<div>とか
+** change
+cs'"
+** delete
+ds'"
+** 選択と囲う
+ysに続けてテキストオブジェクトに続けて'とか
+ex.
+  ysi'(   <- テキストオブジェクト(inside ')を()で囲う
+*** テキストオブジェクト
+iwでカーソルの上にある単語
+awにすると単語の前後のスペースも含まれる
+* emacs
+- find-file :: (kbd " ff")でディレクトリを選ぶとdired
+- switch-to-buffer :: バッファのリスト
+- recentf-find-file :: ファイルの履歴
+- swiper :: 検索ワード入力 → 一覧表示 → jump
+- linum-mode :: 行番号 
+
+TAB 見出しを閉じたり開いたり
+手入力する場合は"*"の後にspaceを入れると認識される
+
+org-modeのエクスポート「C-c C-e h」
+あと、以下２行をとりあえず書いておくと幸せかも
+
+howmのメニューに戻る
+ctrl + c , ,
+
+
+#+OPTIONS: \n:t ^:{}
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org.css"/>
+
+* メニュー
+(menu-bar-mode 1)
+* org export
+;;実行時に確認を求めない
+(setq org-confirm-babel-evaluate nil)
+
+;;言語の設定
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((dot . t)(mermaid . t)))
+* css of export
+とりあえず以下をorg.cssに保存してエクスポートしたファイルと同じディレクトリに置いておくと幸せかも
+#+BEGIN_SRC
+body{
+    background:#FFFFFF;
+}
+
+#table-of-contents{
+}
+
+.outline-2{
+    border-top-color:#000088;
+    border-top-style:solid;
+    border-top-width:2px;
+}
+
+#table-of-contents{
+    border-top-color:#000088;
+    border-top-style:solid;
+    border-top-width:2px;
+}
+
+.outline-2 * {
+}
+
+h2{
+    margin-top:1px;
+    background:#DDDDDD;
+}
+
+.outline-2 h3{
+}
+
+.outline-2 li{
+    margin:5px;
+}
+
+.outline-2 div{
+}
+
+.outline-4{
+    margin-left:2em;
+}
+
+h4{
+    color:#051099;
+}
+
+b{
+    background:#FFCCCC;
+}
+td, th, table{border: 1px solid black}
+th{background:#DDDDDD}
+tbody:nth-child(odd) td{background-color:white}
+tbody:nth-child(even) td{background-color:#d9edf7}
+#+END_SRC
+
+* 改行
+ファイルの先頭に以下を記述する（スペースも大事）
+「#+OPTIONS: \n:t」
+* 強調表示
+取り消し：+hoge+： +hoge+
+アンダーライン：_hoge_： _hoge_
+斜体：/hoge/： /hoge/
+強調：*hoge*： *hoge*
+
+** 以下は改行を保持してアンダースコアを無効にするオプション
+「#+OPTIONS: \n:t ^:{}」
+* info
+ntemacsだとgzipが無いって怒こられる。windows版があるのでbinフォルダに入れる。
+* リンク
+#+begin_src
+[[link][description]]
+#+end_src
+C-c C-l でリンクを貼るほうが楽です。 
+* コードの断片
+(get-char-property (point) 'face)
+TAB 見出しを閉じたり開いたり
+手入力する場合は"*"の後にspaceを入れると認識される
+
+* キーマップ
+  M-RET   見出し
+  M-RIGHT 重要に
+  M-LEFT  簡単に
+* みだしで
+  C-C C-T TODO
+* TODOで
+  S-RIGHT ステータスが進む
+  S-LEFT  ステータスが戻る
+  S-UP    重要度（まだ）
+  S-DOWN  重要度（まだ）
+  M-UP    １つ上の見出しと入れ替える
+  M-DOWN  １つ下の見出しと入れ替える
+* TABLE
+"|"で列を区切って書いた後（閉じる"|"も忘れずに）、TABで整形してくれる
+また、行の最後でTABで次の行を作ってくれる。
+列幅が大きくなってもTAB、列を移動するときTAB。
+
+パイプのエスケープ
+If \vert is not automatically converted to |, call org-toggle-pretty-entities, per:
+
+"|-"とTABで区切り線
+
+（C-c C-cでも一気に整形してくれるみたい）
+
+
+|-----+-----|
+| aaa | bbb |
+|-----+-----|
+|     |     |
+|     |     |
+* リスト
+"- "で始まりワードが続く
+M-RETで次の見出し
+M-矢印で移動
+
+- aaa
+  - bbb
+    - @@@ 
+  - 項目名称 :: 説明
+* FACE
+- カーソル位置のフェイスを調べる 
+  - M-x describe-faceでカーソル位置のフェースが分かる（default表示される）
+- フェイスの設定を修正する
+  - M-x list-faces-display でフェイスの一覧ウィンドウが出るので、 修正したいフェイスを選んで RET
+- 設定を反映させる
+  - 「Set for current session」にカーソルを当てて RET を押すと、一時的に設定を反映させた状態になる
+- 設定を保存する
+  - 「Save for future sessions」を選んで RET を押すと設定が.spacemacs(or .init.el?)に保存される
+* howmの設定
+(define-key global-map [katakana] 'howm-menu) ; [カタカナ] キーでメニュー
+(setq howm-file-name-format "%Y/%m/%Y_%m_%d.txt") ; 1 日 1 ファイル
+(setq howm-keyword-case-fold-search t) ; <<< で大文字小文字を区別しない
+(setq howm-list-title nil) ; 一覧時にタイトルを表示しない
+(setq howm-menu-refresh-after-save nil) ; save 時にメニューを自動更新せず
+(setq howm-refresh-after-save nil) ; save 時に下線を引き直さない
+(setq howm-menu-expiry-hours 2) ; メニューを 2 時間キャッシュ
+* howmのキー
+「Ctrl + c , ,」でメニューに戻る
+* howmの書き方
+** gotoリンク
+「>>> hoge」各メモもhogeにリンク（今のメモから外に出る）
+** come fromリンク
+「<<< foo」各メモのfooからリンク（外のメモから今に来る）
+** wikeリンク
+"["２つと"]"２つでくくる。
+gotoと同じ。ただし、対応するcome fromがなければ作る。
