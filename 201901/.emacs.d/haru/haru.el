@@ -16,38 +16,39 @@
 
 (menu-bar-mode 0)
 
-;;;;ddskk‚ğŠJn‚·‚é
-;; minibuffer‚Å‚àuC-x C-jv‚Åskk‚ğ‹N“®‚·‚é‚Æminibuffer‚Å‚à“ú–{Œê‚ª“ü—Ío—ˆ‚Ü‚·
+;;;;ddskkã‚’é–‹å§‹ã™ã‚‹
+;; minibufferã§ã‚‚ã€ŒC-x C-jã€ã§skkã‚’èµ·å‹•ã™ã‚‹ã¨minibufferã§ã‚‚æ—¥æœ¬èªãŒå…¥åŠ›å‡ºæ¥ã¾ã™
 (require 'skk-autoloads)
 (require 'skk-cus)
 (require 'ccc)
 (require 'skk)
-;; ‚±‚ê‚Í‚Ü‚Áæ‚É‚â‚ç‚È‚¢‚Æƒ_ƒ‚İ‚½‚¢
+;; ã“ã‚Œã¯ã¾ã£å…ˆã«ã‚„ã‚‰ãªã„ã¨ãƒ€ãƒ¡ã¿ãŸã„
 (define-key minibuffer-local-map (kbd "C-j") 'skk-kakutei)
 ;; (skk-mode)
-;;;;l‚Å”¼Šp
-;;;;C-j‚Å‘SŠp‚©‚È(C-j‚ªlisp-interaction-mode‚Åeval-print-last-sexp‚ÉŠ„‚è“–‚Ä‚ç‚ê‚Ä‚¢‚Äã‘‚«‚·‚é–‚É’ˆÓ)
-;;;;‘SŠp‚©‚È‚Éq‚Å‘SŠpƒJƒi
-;;;;‘SŠpƒJƒi or ‘SŠp‚©‚È‚ÉL‚Å‘SŠp‰pš
-;;;;•ÏŠ·‚Éq‚Å‚àƒJƒi‚É‚È‚é
-;;;;•ÏŠ·‚Ì‘OŒó•â‚ÍxƒL[‚Å‚·
-;;;;;;‘—‚è‰¼–¼u“®‚­v‚Ìê‡uUgoKuv‚Ì—l‚É‰¼–¼‚Ìn‚ß‚Ì•¶š‚ğShift Key‚ğ‰Ÿ‚µ‚È‚ª‚ç‘ÅŒ®‚·‚é
+;;;;lã§åŠè§’
+;;;;C-jã§å…¨è§’ã‹ãª(C-jãŒlisp-interaction-modeã§eval-print-last-sexpã«å‰²ã‚Šå½“ã¦ã‚‰ã‚Œã¦ã„ã¦ä¸Šæ›¸ãã™ã‚‹äº‹ã«æ³¨æ„)
+;;;;å…¨è§’ã‹ãªæ™‚ã«qã§å…¨è§’ã‚«ãƒŠ
+;;;;å…¨è§’ã‚«ãƒŠ or å…¨è§’ã‹ãªæ™‚ã«Lã§å…¨è§’è‹±å­—
+;;;;å¤‰æ›æ™‚ã«qã§ã‚‚ã‚«ãƒŠã«ãªã‚‹
+;;;;å¤‰æ›æ™‚ã®å‰å€™è£œã¯xã‚­ãƒ¼ã§ã™
+;;;;;;é€ã‚Šä»®åã€Œå‹•ãã€ã®å ´åˆã€ŒUgoKuã€ã®æ§˜ã«ä»®åã®å§‹ã‚ã®æ–‡å­—ã‚’Shift Keyã‚’æŠ¼ã—ãªãŒã‚‰æ‰“éµã™ã‚‹
 
-;; ddskk‚Ìtar.gz‚ğƒ_ƒEƒ“ƒ[ƒh‚·‚é
-;; ‰ğ“€‚·‚é
-;; ˆÈ‰º‚æ‚è«‘‚ğƒ_ƒEƒ“ƒ[ƒh‚·‚é
+
+;; ddskkã®tar.gzã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+;; è§£å‡ã™ã‚‹
+;; ä»¥ä¸‹ã‚ˆã‚Šè¾æ›¸ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
 ;;   http://openlab.jp/skk/dic/SKK-JISYO.L.gz
-;; ‰ğ“€‚µ‚½ƒtƒHƒ‹ƒ_‚ÌdicƒtƒHƒ‹ƒ_‚É‰ğ“€‚µ‚½«‘‚ğƒRƒs[‚·‚é
-;; makeit.bat‚ğmymakeit.bat‚É•Ê–¼ƒRƒs[‚·‚é
-;; mymakeit.bat‚ğ•ÒW‚·‚é(HOME‚ÆEMACS‚Ì‚İ•ÒW)
+;; è§£å‡ã—ãŸãƒ•ã‚©ãƒ«ãƒ€ã®dicãƒ•ã‚©ãƒ«ãƒ€ã«è§£å‡ã—ãŸè¾æ›¸ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
+;; makeit.batã‚’mymakeit.batã«åˆ¥åã‚³ãƒ”ãƒ¼ã™ã‚‹
+;; mymakeit.batã‚’ç·¨é›†ã™ã‚‹(HOMEã¨EMACSã®ã¿ç·¨é›†)
 ;;   set PREFIX=%HOME%
 ;;   set EMACS=c:\ueno\tool\NTemacs\emacs\bin\emacs.exe
-;; SKK-CFG‚É3s’Ç‰Á
+;; SKK-CFGã«3è¡Œè¿½åŠ 
 ;;   (setq SKK_LISPDIR "C:/users/cats-kai-053/.emacs.d/haru-pack/ddskk")
 ;;   (setq SKK_INFODIR "C:/users/cats-kai-053/.emacs.d/info/ddskk")
 ;;   (setq SKK_DATADIR "C:/users/cats-kai-053/.emacs.d/haru-pack/ddskk/data")
-;; mymakeit.bat what-where‚ÅƒCƒ“ƒXƒg[ƒ‹êŠ‚ğŠm”F
-;; mymakeit.bat install‚ÅƒCƒ“ƒXƒg[ƒ‹
+;; mymakeit.bat what-whereã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«å ´æ‰€ã‚’ç¢ºèª
+;; mymakeit.bat installã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«
 
 
 
@@ -90,7 +91,7 @@
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
-;; Š‡ŒÊ‚ÌF‚ğ‹­’²‚·‚éİ’è
+;; æ‹¬å¼§ã®è‰²ã‚’å¼·èª¿ã™ã‚‹è¨­å®š
 (require 'cl-lib)
 (require 'color)
 (defun rainbow-delimiters-using-stronger-colors ()
@@ -103,8 +104,8 @@
 (add-hook 'emacs-startup-hook 'rainbow-delimiters-using-stronger-colors)
 
 
-;; ‰Šú‰»ŠÔŒv‘ª—p
-;; ‹N“®Œã‚ÉM-x initchart-visualize-init-sequence‚Åƒ`ƒƒ[ƒgì¬
+;; åˆæœŸåŒ–æ™‚é–“è¨ˆæ¸¬ç”¨
+;; èµ·å‹•å¾Œã«M-x initchart-visualize-init-sequenceã§ãƒãƒ£ãƒ¼ãƒˆä½œæˆ
 ;; (require 'initchart)
 ;; (initchart-record-execution-time-of load file)
 ;; (initchart-record-execution-time-of require feature)
@@ -137,7 +138,7 @@
 (set-face-attribute 'highlight-changes nil :foreground nil :background nil :underline nil)
 (set-face-attribute 'highlight-changes-delete nil :foreground nil :background nil  :underline nil)
 
-;; •Û‘¶Œã‚ÉƒnƒCƒ‰ƒCƒg‚ğíœ
+;; ä¿å­˜å¾Œã«ãƒã‚¤ãƒ©ã‚¤ãƒˆã‚’å‰Šé™¤
 ;; (add-hook 'after-save-hook
 ;;           (lambda ()
 ;;             (when highlight-changes-mode
@@ -145,7 +146,7 @@
 ;;                 (widen)
 ;;                 (highlight-changes-remove-highlight (point-min) (point-max))))))
 
-;; ˆÈ‰º‚ÍƒnƒCƒ‰ƒCƒg‚Ìface‚ğ•ÏX‚·‚é•û–@
+;; ä»¥ä¸‹ã¯ãƒã‚¤ãƒ©ã‚¤ãƒˆã®faceã‚’å¤‰æ›´ã™ã‚‹æ–¹æ³•
 ;; (make-empty-face 'highlight-changes-saved-face)
 ;; (set-face-attribute 'highlight-changes-saved-face nil :foreground nil :background "#151500" :underline nil)
 ;; (set-face-attribute 'highlight-changes nil :foreground nil :background "#002200" :underline nil)
@@ -163,11 +164,11 @@
     (highlight-changes-mode 'toggle)
     (highlight-changes-mode 'toggle))
 
-;;C-x, C-f‚Ìfind-file‚Ìdefault directory‚ğ"~/"‚É‚·‚é
+;;C-x, C-fã®find-fileã®default directoryã‚’"~/"ã«ã™ã‚‹
 (setq default-directory "~/")
 (setq command-line-default-directory "~/")
 
-;; character code İ’è
+;; character code è¨­å®š
 (set-keyboard-coding-system 'utf-8)
 
 (prefer-coding-system 'utf-8-dos)
@@ -179,17 +180,17 @@
 
 ;;(setenv "LANG" "ja_JP.CP932")
 
-;ctrl-u‚ğevil‚ÉH‚í‚·
+;ctrl-uã‚’evilã«é£Ÿã‚ã™
 (setq-default evil-want-C-u-scroll t)
-;emacsƒXƒe[ƒg‚Å‚àC-w‚ğƒEƒBƒ“ƒhƒEˆÚ“®ƒRƒ}ƒ“ƒh‚ÉŠ„‚è“–‚Ä‚é
+;emacsã‚¹ãƒ†ãƒ¼ãƒˆã§ã‚‚C-wã‚’ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç§»å‹•ã‚³ãƒãƒ³ãƒ‰ã«å‰²ã‚Šå½“ã¦ã‚‹
 (setq-default evil-want-C-w-in-emacs-state t)
 (setq evil-search-module 'evil-search)
 (setq evil-ex-search-vim-style-regexp t)
 (setq evil-auto-indent nil)
-;;ƒJƒXƒ^ƒ}ƒCƒY•Ï”‚Írequire‚Ì‘O‚És‚¤
+;;ã‚«ã‚¹ã‚¿ãƒã‚¤ã‚ºå¤‰æ•°ã¯requireã®å‰ã«è¡Œã†
 (require 'evil)
 (evil-mode 1)
-;;evil-normal state‚ÅIME‚ğOFF‚·‚é
+;;evil-normal stateã§IMEã‚’OFFã™ã‚‹
 ;;(add-hook 'evil-normal-state-entry-hook 'ime-force-off)
 
 (require 'evil-search-highlight-persist)
@@ -203,21 +204,21 @@
 ;; key bind "SPC SPC s"
 
 
-;; load-path‚Éundo-tree.el‚ª‘¶İ‚µ‚È‚¢‚ÆƒGƒ‰[‚É‚È‚é
+;; load-pathã«undo-tree.elãŒå­˜åœ¨ã—ãªã„ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹
 (require 'undo-tree)
 
-;; ƒc[ƒ‹ƒo[‚ğ”ñ•\¦
+;; ãƒ„ãƒ¼ãƒ«ãƒãƒ¼ã‚’éè¡¨ç¤º
 (tool-bar-mode 0)
 
-;; ƒe[ƒ}
+;; ãƒ†ãƒ¼ãƒ
 (load-theme 'tsdh-dark t)
 
 (setq howm-process-coding-system 'utf-8-dos)
-;; busybox grep‚©‚çripgrep‚Éæ‚èŠ·‚¦
-;; (setq howm-view-use-grep t) ;[buxybox grep %1 %2...]‚Èbat‚ğwindowsƒtƒHƒ‹ƒ_‚É’u‚¢‚Ä‚¨‚­
+;; busybox grepã‹ã‚‰ripgrepã«ä¹—ã‚Šæ›ãˆ
+;; (setq howm-view-use-grep t) ;[buxybox grep %1 %2...]ãªbatã‚’windowsãƒ•ã‚©ãƒ«ãƒ€ã«ç½®ã„ã¦ãŠã
 
 ;; (setq howm-view-use-grep t)
-;; (setq howm-view-grep-command "rg") ;rg.exe‚ğwindowsƒtƒHƒ‹ƒ_‚É’u‚¢‚Ä‚¨‚­
+;; (setq howm-view-grep-command "rg") ;rg.exeã‚’windowsãƒ•ã‚©ãƒ«ãƒ€ã«ç½®ã„ã¦ãŠã
 ;; (setq howm-view-grep-option "-nH --no-heading --color never")
 ;; (setq howm-view-grep-extended-option nil)
 ;; (setq howm-view-grep-fixed-option "-F")
@@ -227,8 +228,8 @@
 (setq howm-menu-lang 'ja)
 (require 'howm)
 
-(setq howm-file-name-format "%Y/%m/%Y_%m_%d_%H%M%S.org") ; 1 “ú 1 ƒtƒ@ƒCƒ‹
-(setq howm-keyword-case-fold-search t) ; <<< ‚Å‘å•¶š¬•¶š‚ğ‹æ•Ê‚µ‚È‚¢
+(setq howm-file-name-format "%Y/%m/%Y_%m_%d_%H%M%S.org") ; 1 æ—¥ 1 ãƒ•ã‚¡ã‚¤ãƒ«
+(setq howm-keyword-case-fold-search t) ; <<< ã§å¤§æ–‡å­—å°æ–‡å­—ã‚’åŒºåˆ¥ã—ãªã„
 
 
 (require 'url-http)
@@ -236,60 +237,60 @@
 (require 'calfw-ical)
 (require 'calfw-org)
 
-;; MyWGet‚Íc:\windows‚É’u‚¢‚Ä‚¨‚­ipath‚ª’Ê‚Á‚Ä‚ê‚Î‚Ç‚±‚Å‚à—Ç‚¢‚æj
+;; MyWGetã¯c:\windowsã«ç½®ã„ã¦ãŠãï¼ˆpathãŒé€šã£ã¦ã‚Œã°ã©ã“ã§ã‚‚è‰¯ã„ã‚ˆï¼‰
 ;;(setq cfw:ical-calendar-external-shell-command "MyWGet -u nmoc\\8010973 -p CatsVer308 ")
 (setq cfw:ical-calendar-external-shell-command "wget -q --no-check-certificate -O - ")
 (setq cfw:ical-url-to-buffer-get 'cfw:ical-url-to-buffer-external)
-;; Œ
+;; æœˆ
 (setq calendar-month-name-array
-    ["‚PŒ" "‚QŒ" "‚RŒ" "‚SŒ" "‚TŒ" "‚UŒ"
-     "‚VŒ" "‚WŒ" "‚XŒ" "‚P‚OŒ" "‚P‚PŒ" "‚P‚QŒ"])
+    ["ï¼‘æœˆ" "ï¼’æœˆ" "ï¼“æœˆ" "ï¼”æœˆ" "ï¼•æœˆ" "ï¼–æœˆ"
+     "ï¼—æœˆ" "ï¼˜æœˆ" "ï¼™æœˆ" "ï¼‘ï¼æœˆ" "ï¼‘ï¼‘æœˆ" "ï¼‘ï¼’æœˆ"])
 
-;; —j“ú
+;; æ›œæ—¥
 (setq calendar-day-name-array
-    ["“ú—j“ú" "Œ—j“ú" "‰Î—j“ú" "…—j“ú" "–Ø—j“ú" "‹à—j“ú" "“y—j“ú"])
+    ["æ—¥æ›œæ—¥" "æœˆæ›œæ—¥" "ç«æ›œæ—¥" "æ°´æ›œæ—¥" "æœ¨æ›œæ—¥" "é‡‘æ›œæ—¥" "åœŸæ›œæ—¥"])
 
-;; T‚Ìæ“ª‚Ì—j“ú
-(setq calendar-week-start-day 0) ; “ú—j“ú‚Í0, Œ—j“ú‚Í1
-;;“ú–{‚Ì‹x“ú
+;; é€±ã®å…ˆé ­ã®æ›œæ—¥
+(setq calendar-week-start-day 0) ; æ—¥æ›œæ—¥ã¯0, æœˆæ›œæ—¥ã¯1
+;;æ—¥æœ¬ã®ä¼‘æ—¥
 (eval-after-load "holidays"
 '(progn
     (require 'japanese-holidays)
-    (setq calendar-holidays ; ‘¼‚Ì‘‚Ìj“ú‚à•\¦‚³‚¹‚½‚¢ê‡‚Í“K“–‚É’²®
+    (setq calendar-holidays ; ä»–ã®å›½ã®ç¥æ—¥ã‚‚è¡¨ç¤ºã•ã›ãŸã„å ´åˆã¯é©å½“ã«èª¿æ•´
 	    (append japanese-holidays holiday-local-holidays holiday-other-holidays))
-    (setq mark-holidays-in-calendar t) ; j“ú‚ğƒJƒŒƒ“ƒ_[‚É•\¦
-    ;; “y—j“úE“ú—j“ú‚ğj“ú‚Æ‚µ‚Ä•\¦‚·‚éê‡AˆÈ‰º‚Ìİ’è‚ğ’Ç‰Á‚µ‚Ü‚·B
-    ;; ƒfƒtƒHƒ‹ƒg‚Åİ’èÏ‚İ
-    (setq japanese-holiday-weekend '(0 6)     ; “y“ú‚ğj“ú‚Æ‚µ‚Ä•\¦
-	    japanese-holiday-weekend-marker     ; “y—j“ú‚ğ…F‚Å•\¦
+    (setq mark-holidays-in-calendar t) ; ç¥æ—¥ã‚’ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«è¡¨ç¤º
+    ;; åœŸæ›œæ—¥ãƒ»æ—¥æ›œæ—¥ã‚’ç¥æ—¥ã¨ã—ã¦è¡¨ç¤ºã™ã‚‹å ´åˆã€ä»¥ä¸‹ã®è¨­å®šã‚’è¿½åŠ ã—ã¾ã™ã€‚
+    ;; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§è¨­å®šæ¸ˆã¿
+    (setq japanese-holiday-weekend '(0 6)     ; åœŸæ—¥ã‚’ç¥æ—¥ã¨ã—ã¦è¡¨ç¤º
+	    japanese-holiday-weekend-marker     ; åœŸæ›œæ—¥ã‚’æ°´è‰²ã§è¡¨ç¤º
 	    '(holiday nil nil nil nil nil japanese-holiday-saturday))
     (add-hook 'calendar-today-visible-hook 'japanese-holiday-mark-weekend)
     (add-hook 'calendar-today-invisible-hook 'japanese-holiday-mark-weekend)))
 
-;;g‚«‚å‚¤h‚ğƒ}[ƒN‚·‚é‚É‚ÍˆÈ‰º‚Ìİ’è‚ğ’Ç‰Á‚µ‚Ü‚·B
+;;â€œãã‚‡ã†â€ã‚’ãƒãƒ¼ã‚¯ã™ã‚‹ã«ã¯ä»¥ä¸‹ã®è¨­å®šã‚’è¿½åŠ ã—ã¾ã™ã€‚
 (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
 
-;; ƒJƒŒƒ“ƒ_[‚©‚çSPC‚ÅŒÄ‚Î‚ê‚éÚ×‰æ–Ê‚Åcfw‚ÌƒL[ƒ}ƒbƒv‚ğ—Dæ
-;; ‚Å‚àhjkl‚Íevil‚Ås‚¢‚½‚¢
+;; ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã‹ã‚‰SPCã§å‘¼ã°ã‚Œã‚‹è©³ç´°ç”»é¢ã§cfwã®ã‚­ãƒ¼ãƒãƒƒãƒ—ã‚’å„ªå…ˆ
+;; ã§ã‚‚hjklã¯evilã§è¡Œã„ãŸã„
 ;; https://tarao.hatenablog.com/entry/20130304/evil_config#keymap-override
 (evil-make-overriding-map cfw:details-mode-map 'normal)
 (evil-add-hjkl-bindings cfw:details-mode-map 'normal)
 
 
-;; ‚Ü‚¾‚æ‚­‚í‚©‚Á‚Ä‚È‚¢‚Ì‚Å
+;; ã¾ã ã‚ˆãã‚ã‹ã£ã¦ãªã„ã®ã§
 ;; https://docs.projectile.mx/en/latest/
 ;; (require 'projectile)
 ;; (require 'counsel-projectile)
-;; C-c p‚É‘±‚¯‚Ä‰½‚©“ü—Í‚·‚é‚Æ—Ç‚¢‚Á‚Û‚¢
+;; C-c pã«ç¶šã‘ã¦ä½•ã‹å…¥åŠ›ã™ã‚‹ã¨è‰¯ã„ã£ã½ã„
 ;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 ;; (setq projectile-indexing-method 'native)
-;; (setq projectile-indexing-method 'hybrid)  ; windows‚¶‚á“®‚©‚È‚¢
-;; (setq projectile-indexing-method 'alien)   ; windows‚¶‚á“®‚©‚È‚¢
+;; (setq projectile-indexing-method 'hybrid)  ; windowsã˜ã‚ƒå‹•ã‹ãªã„
+;; (setq projectile-indexing-method 'alien)   ; windowsã˜ã‚ƒå‹•ã‹ãªã„
 ;; M-x counsel-projectile-mode
 ;; M-x projectile-discover-projects-in-directory.
-;; ƒvƒƒWƒFƒNƒg‚Ìƒ‹[ƒg‚É.projetile‚ğì¬
-;; –³‹‚·‚éƒtƒ@ƒCƒ‹‚Æ‚©ƒfƒBƒŒƒNƒgƒŠ‚Æ‚©‚ğ‹Lq‚·‚é
-;; (node_modules‚Æ‚©Œ©‚És‚­‚ÆƒNƒ\’x‚¢)
+;; ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ«ãƒ¼ãƒˆã«.projetileã‚’ä½œæˆ
+;; ç„¡è¦–ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¨ã‹ã‚’è¨˜è¿°ã™ã‚‹
+;; (node_modulesã¨ã‹è¦‹ã«è¡Œãã¨ã‚¯ã‚½é…ã„)
 
 ;;=======================================
 ;;hiwin
@@ -320,7 +321,7 @@
 (setq eyebrowse-wrap-around t)
 
 
-;;Šg’£q‚É‘Î‚·‚éƒ‚[ƒh‚Ìw’è
+;;æ‹¡å¼µå­ã«å¯¾ã™ã‚‹ãƒ¢ãƒ¼ãƒ‰ã®æŒ‡å®š
 (add-to-list 'auto-mode-alist '("\\.PRC\\'" . sql-mode))
 
 (add-hook 'sql-mode-hook 'my-tag-set)
@@ -340,25 +341,25 @@
 				dir (file-name-directory (directory-file-name dir)))))
 	ret))
 
-;;(file-name-as-directory "c:\\temp") -> ––”ö‚É‹æØ‚è•¶š‚ğ•t‚¯‚é
-;;(directory-file-name "c:\\temp\\") -> ––”ö‚Ì‹æØ‚è•¶š‚ğÁ‚·
-;;(file-name-directory "c:\\temp\\aaa") -> eƒfƒBƒŒƒNƒgƒŠ‚ğ•Ô‚·(––”ö‚É‹æØ‚è•¶š•t)
+;;(file-name-as-directory "c:\\temp") -> æœ«å°¾ã«åŒºåˆ‡ã‚Šæ–‡å­—ã‚’ä»˜ã‘ã‚‹
+;;(directory-file-name "c:\\temp\\") -> æœ«å°¾ã®åŒºåˆ‡ã‚Šæ–‡å­—ã‚’æ¶ˆã™
+;;(file-name-directory "c:\\temp\\aaa") -> è¦ªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’è¿”ã™(æœ«å°¾ã«åŒºåˆ‡ã‚Šæ–‡å­—ä»˜)
 
 
 
 
-;;Ü‚è•Ô‚³‚È‚¢
+;;æŠ˜ã‚Šè¿”ã•ãªã„
 (setq-default truncate-partial-width-windows t)
 (setq-default truncate-lines t)
 ;;(setq default-tab-width 4)
 (setq-default tab-width 4)
 (setq-default indent-tabs-mode nil)
-;; ‰üs‚Ì©“®ƒCƒ“ƒfƒ“ƒgoff
+;; æ”¹è¡Œæ™‚ã®è‡ªå‹•ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆoff
 (electric-indent-mode -1)
 (setq-default tab-stop-list '(0 4 8 12 16 20 24 28 32 36 40 44 48 52 56 60
                           64 68 72 76 80 84 88 92 96 100 104 108 112
                           116 120))
-;; memo: emacs‚Åƒ^ƒu•¶š‚ğ“ü—Í‚·‚é‚É‚ÍC-q TAB
+;; memo: emacsã§ã‚¿ãƒ–æ–‡å­—ã‚’å…¥åŠ›ã™ã‚‹ã«ã¯C-q TAB
 
 ;; (setq-default indent-line-function 'tab-to-tab-stop)
 
@@ -368,7 +369,7 @@
 (setq-default show-trailing-whitespace t)
 (set-face-attribute 'trailing-whitespace nil :background "#FFBB88")
 
-;; ‘Î˜bŠÂ‹«‚Æ‚©trailing whitespace‚ğ–³Œø‚É‚·‚é
+;; å¯¾è©±ç’°å¢ƒã¨ã‹trailing whitespaceã‚’ç„¡åŠ¹ã«ã™ã‚‹
 (defun my/disable-trailing-mode-hook ()
   "Disable show tail whitespace."
   (setq show-trailing-whitespace nil))
@@ -390,39 +391,39 @@
 
 
 (require 'org)
-(setq org-fast-todo-selection t) ;C-c C-t‚ÅTODO‚É‚·‚é
+(setq org-fast-todo-selection t) ;C-c C-tã§TODOã«ã™ã‚‹
 ;(setq org-todo-keywords
 ;      '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "Done(x)" "CANCEL(c)")))
 (setq org-todo-keywords
 	'((sequence "TODO" "STARTED" "WAITING" "|" "Done" "CANCEL")))
-(setq org-startup-indented t) ;org‚ÌƒCƒ“ƒfƒ“ƒg‚Ì•\¦
-(setq org-src-fontify-natively t) ;#+BEGIN_SRC“à‚ÌF•t‚¯
+(setq org-startup-indented t) ;orgã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®è¡¨ç¤º
+(setq org-src-fontify-natively t) ;#+BEGIN_SRCå†…ã®è‰²ä»˜ã‘
 
 ;;(add-to-list 'custom-theme-load-path (file-name-as-directory "~/.emacs.d/mycolor"))
 (setq-default line-spacing 2)
-;; (set-frame-font "‚l‚r ƒSƒVƒbƒN-9")
+;; (set-frame-font "ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯-9")
 
 (setq org-agenda-files (list "~/todo.org" "~/work.org"))
 
-;; plantuml.jar‚Ö‚ÌƒpƒX‚ğİ’è
-;; ‚ ‚ÆAdot‚ÌêŠPATH or ‰º‹LŠÂ‹«•Ï”‚Åw’è‚·‚é
+;; plantuml.jarã¸ã®ãƒ‘ã‚¹ã‚’è¨­å®š
+;; ã‚ã¨ã€dotã®å ´æ‰€PATH or ä¸‹è¨˜ç’°å¢ƒå¤‰æ•°ã§æŒ‡å®šã™ã‚‹
 ;; set GRAPHVIZ_DOT=C:\ueno\tool\graphviz\bin\dot.exe
 (setq org-plantuml-jar-path "~/.emacs.d/lib/plantuml.jar")
 
-;;babelÀs‚ÉŠm”F‚ğ‹‚ß‚È‚¢
+;;babelå®Ÿè¡Œæ™‚ã«ç¢ºèªã‚’æ±‚ã‚ãªã„
 (setq org-confirm-babel-evaluate nil)
 
-;;babelŒ¾Œê‚Ìİ’è
+;;babelè¨€èªã®è¨­å®š
 (org-babel-do-load-languages
   'org-babel-load-languages
   '((dot . t)(mermaid . t)(plantuml . t)(sql . t)))
 
-;;done‚µ‚½‚ç“ú•t‚ğ’Ç‰Á
+;;doneã—ãŸã‚‰æ—¥ä»˜ã‚’è¿½åŠ 
 ;;or
 ;;#+STARTUP: logdone
 (setq org-log-done 'time)
 
-;;export‚ÉƒZƒNƒVƒ‡ƒ“‚É”Ô†‚ğ•t—^‚µ‚È‚¢
+;;exportæ™‚ã«ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«ç•ªå·ã‚’ä»˜ä¸ã—ãªã„
 ;;or
 ;;#+OPTIONS: nul:nil
 (setq org-export-with-section-numbers 2)
@@ -455,7 +456,7 @@
 ;;   "open gvim from dired"
 ;;   (interactive)
 ;;   (let ((f (dired-get-filename)))
-	;;NTEmacs‚Ævim‚Å$HOME‚ªˆÙ‚È‚é‚Ì‚Å_gvimrc‚ğw’è‚µ‚ÄŠJ‚­
+	;;NTEmacsã¨vimã§$HOMEãŒç•°ãªã‚‹ã®ã§_gvimrcã‚’æŒ‡å®šã—ã¦é–‹ã
 ;; 	(w32-shell-execute "open" "gvim" (concat "-U ~/../../_gvimrc " f))
 ;; 	))
 
@@ -463,7 +464,7 @@
 
 (setq dired-toggle-window-size 32)
 ;;=======================================
-;;ŠÖ”’è‹`
+;;é–¢æ•°å®šç¾©
 ;;=======================================
 (defun my-window-resizer ()
   "Control window size and position."
@@ -494,9 +495,9 @@
                (message "Quit")
                (throw 'end-flag t)))))))
 
-;;explore‚ğŠJ‚­
+;;exploreã‚’é–‹ã
 ;; (defun explorer (&optional path)
-;; "ˆø”‚ª‚ ‚ê‚Îˆø”‚ÌAÈ—ª‚³‚ê‚Ä‚¢‚ê‚ÎŒ»İ‚Ìƒoƒbƒtƒ@‚ğexplorer‚ÅŠJ‚­"
+;; "å¼•æ•°ãŒã‚ã‚Œã°å¼•æ•°ã®ã€çœç•¥ã•ã‚Œã¦ã„ã‚Œã°ç¾åœ¨ã®ãƒãƒƒãƒ•ã‚¡ã‚’explorerã§é–‹ã"
 ;; (interactive)
 ;; (setq path (expand-file-name (or path (buffer-file-name))))
 ;; (cond
@@ -508,7 +509,7 @@
 ;; 	(w32-shell-execute "open" "explorer.exe" dos-path)))))
 
 
-;;ƒJƒŒƒ“ƒ_[
+;;ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼
 (defun my-open-cal ()
   (interactive)
   (cfw:open-calendar-buffer
@@ -526,7 +527,7 @@
 ;; (w32-shell-execute "open" "C:\\ueno\\prog\\OrgNotification\\OrgNotification.exe" )
 ;; (w32-shell-execute "open" "c:\\Users\\cats-kai-053\\AppData\\Roaming\\npm\\node_modules\\electron\\dist\\electron.exe" "C:\\ueno\\src\\electron\\pomodoro" )
 
-;;‹óƒtƒ@ƒCƒ‹‚ğì¬‚·‚é
+;;ç©ºãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã™ã‚‹
 (defun mytouch (fname)
   "create empty file using touch.bat"
   (interactive "sInput File Name:")
@@ -547,50 +548,50 @@
 
 
 ;;=======================================
-;;—š—ğ
+;;å±¥æ­´
 ;;=======================================
-;; M-x recentf-open-files‚ÅÀs‚Å‚«‚é
+;; M-x recentf-open-filesã§å®Ÿè¡Œã§ãã‚‹
 (require 'recentf)
 (setq recentf-save-file "~/.emacs.d/.recentf")
-(setq recentf-max-saved-items 1000)            ;; recentf ‚É•Û‘¶‚·‚éƒtƒ@ƒCƒ‹‚Ì”
-(setq recentf-exclude '(".recentf"))           ;; .recentf©‘Ì‚ÍŠÜ‚Ü‚È‚¢
-(setq recentf-auto-cleanup 'never)             ;; •Û‘¶‚·‚é“à—e‚ğ®—
-(run-with-idle-timer 30 t '(lambda ()          ;; 30•b‚²‚Æ‚É .recentf ‚ğ•Û‘¶
+(setq recentf-max-saved-items 1000)            ;; recentf ã«ä¿å­˜ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®æ•°
+(setq recentf-exclude '(".recentf"))           ;; .recentfè‡ªä½“ã¯å«ã¾ãªã„
+(setq recentf-auto-cleanup 'never)             ;; ä¿å­˜ã™ã‚‹å†…å®¹ã‚’æ•´ç†
+(run-with-idle-timer 30 t '(lambda ()          ;; 30ç§’ã”ã¨ã« .recentf ã‚’ä¿å­˜
    (with-suppressed-message (recentf-save-list))))
 (recentf-mode 1)
 (require 'recentf-find-file)
-;; M-x recentf-find-file‚Åivy‚©‚çrecentf
+;; M-x recentf-find-fileã§ivyã‹ã‚‰recentf
 
 
 ;;=======================================
-;; sŠÔİ’è
+;; è¡Œé–“è¨­å®š
 ;;======================================
-;;®”‚Åw’è‚·‚é‚ÆƒsƒNƒZƒ‹”‚Å
-;;­”‚Åw’è‚·‚é‚Æs‚Ì‚‚³‚É‘Î‚µ‚Ä‘Š‘Î’l‚Åİ’è‚³‚ê‚é
+;;æ•´æ•°ã§æŒ‡å®šã™ã‚‹ã¨ãƒ”ã‚¯ã‚»ãƒ«æ•°ã§
+;;å°‘æ•°ã§æŒ‡å®šã™ã‚‹ã¨è¡Œã®é«˜ã•ã«å¯¾ã—ã¦ç›¸å¯¾å€¤ã§è¨­å®šã•ã‚Œã‚‹
 (setq-default line-spacing 2)
 
 ;;=======================================
-;; ƒtƒHƒ“ƒg
+;; ãƒ•ã‚©ãƒ³ãƒˆ
 ;;=======================================
-;; (set-frame-font "‚l‚r ƒSƒVƒbƒN-9")
+;; (set-frame-font "ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯-9")
 
-;;;;ƒoƒbƒNƒAƒbƒv‚ğì‚ç‚È‚¢
+;;;;ãƒãƒƒã‚¯ã‚¢ãƒƒãƒ—ã‚’ä½œã‚‰ãªã„
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-;;;;ƒoƒbƒtƒ@‚ÌI‚í‚è‚ğ¦‚ß‚·
+;;;;ãƒãƒƒãƒ•ã‚¡ã®çµ‚ã‚ã‚Šã‚’ç¤ºã‚ã™
 (setq-default indicate-empty-lines t)
 
-;;;;ƒtƒ@ƒCƒ‹‚ÌÅIs‚Å‰üs‚ğ‹­§‚·‚é
+;;;;ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ€çµ‚è¡Œã§æ”¹è¡Œã‚’å¼·åˆ¶ã™ã‚‹
 (setq-default require-final-newline t)
 
-;;;;ƒAƒ“ƒ_[ƒXƒRƒA‚ğ’PŒê‚Ì‹«ŠE‚Æ‚µ‚È‚¢(vim‚Æ“¯‚¶‚É‚·‚é)
+;;;;ã‚¢ãƒ³ãƒ€ãƒ¼ã‚¹ã‚³ã‚¢ã‚’å˜èªã®å¢ƒç•Œã¨ã—ãªã„(vimã¨åŒã˜ã«ã™ã‚‹)
 (modify-syntax-entry ?_ "w" (standard-syntax-table))
 
 
 
 ;;=======================================
-;;ivy(•âŠ®)
+;;ivy(è£œå®Œ)
 ;;=======================================
 (require 'ivy)
 (require 'counsel)
@@ -602,14 +603,14 @@
 (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 (setq ivy-use-virtual-buffers t)
 (setq ivy-height 20)
-(define-key ivy-minibuffer-map (kbd "TAB") 'ivy-alt-done)  ; TAB‚Q‰ñ‚ÅŒˆ’è‚ªŒ™‚È‚Ì‚Åã‘‚«
+(define-key ivy-minibuffer-map (kbd "TAB") 'ivy-alt-done)  ; TABï¼’å›ã§æ±ºå®šãŒå«Œãªã®ã§ä¸Šæ›¸ã
 
 
 ;;=======================================
 ;;company
 ;;=======================================
 (require 'company)
-(global-company-mode) ; ‘Sƒoƒbƒtƒ@‚Å—LŒø‚É‚·‚é
+(global-company-mode) ; å…¨ãƒãƒƒãƒ•ã‚¡ã§æœ‰åŠ¹ã«ã™ã‚‹
 
 (set-face-attribute 'company-tooltip nil :foreground "black" :background "lightgrey")
 (set-face-attribute 'company-tooltip-common nil :foreground "black" :background "lightgrey")
@@ -620,7 +621,7 @@
 (set-face-attribute 'company-scrollbar-bg nil :background "gray40")
 
 ;; fuck, TAGS -> ETAGS
-;; company‚Å’è‹`‚³‚ê‚Ä‚¢‚éŠÖ”‚ğã‘‚«
+;; companyã§å®šç¾©ã•ã‚Œã¦ã„ã‚‹é–¢æ•°ã‚’ä¸Šæ›¸ã
 (defun company-etags-find-table ()
   (let ((file (expand-file-name
                "etags"
@@ -658,7 +659,7 @@
 (define-key evil-normal-state-map " gd" 'tide-jump-to-definition)
 (define-key evil-normal-state-map " rr" 'recentf-find-file)
 (define-key evil-normal-state-map " ff" 'counsel-find-file)
-(define-key evil-normal-state-map " bb" 'switch-to-buffer)  ;; C-x b‚Å‚à—Ç‚¢
+(define-key evil-normal-state-map " bb" 'switch-to-buffer)  ;; C-x bã§ã‚‚è‰¯ã„
 (define-key evil-normal-state-map "  s" 'avy-goto-char)
 (define-key evil-normal-state-map "  /" 'swiper)
 (define-key evil-normal-state-map " ch" 'counsel-command-history)
@@ -671,7 +672,7 @@
 (global-set-key [C-tab] 'other-window)
 (global-set-key (kbd "C-x C-j") 'skk-mode)
 
-;; emacsƒXƒe[ƒg‚É‘Î‚µ‚Ä
+;; emacsã‚¹ãƒ†ãƒ¼ãƒˆã«å¯¾ã—ã¦
 (define-key package-menu-mode-map (kbd "j") 'next-line)
 (define-key package-menu-mode-map (kbd "k") 'previous-line)
 (define-key package-menu-mode-map (kbd "h") 'backward-char)
@@ -718,8 +719,8 @@
 
 ;;=======================================
 ;;omnicsharp-mode
-;;omnisharp--do-server-start@omnisharp-server-management.el‚Ì
-;;start-process‚Ìˆø”‚ÉSPACE‚ğ’Ç‰Á‚·‚é
+;;omnisharp--do-server-start@omnisharp-server-management.elã®
+;;start-processã®å¼•æ•°ã«SPACEã‚’è¿½åŠ ã™ã‚‹
 ;;=======================================
 (require 'omnisharp)
 (add-hook 'csharp-mode-hook 'omnisharp-mode)
@@ -742,24 +743,24 @@
 (setq eshell-output-filter-functions (remove 'eshell-handle-ansi-color eshell-output-filter-functions))
 
 
-;; M-xŒo—R‚¾‚Æƒ~ƒjƒoƒbƒtƒ@‚ªƒJƒŒƒ“ƒg‚Æ‚È‚è(‘¼‚Ìƒoƒbƒtƒ@‚Íhiwin‚ª—LŒø‚É‚È‚è)
-;; ³‚µ‚¢face‚ª“¾‚ç‚ê‚È‚¢ˆ×AƒL[ƒ{[ƒh‚ÉƒRƒ}ƒ“ƒh‚Æ‚µ‚ÄƒoƒCƒ“ƒh‚µ‚Ä‚ ‚é
+;; M-xçµŒç”±ã ã¨ãƒŸãƒ‹ãƒãƒƒãƒ•ã‚¡ãŒã‚«ãƒ¬ãƒ³ãƒˆã¨ãªã‚Š(ä»–ã®ãƒãƒƒãƒ•ã‚¡ã¯hiwinãŒæœ‰åŠ¹ã«ãªã‚Š)
+;; æ­£ã—ã„faceãŒå¾—ã‚‰ã‚Œãªã„ç‚ºã€ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒãƒ³ãƒ‰ã¨ã—ã¦ãƒã‚¤ãƒ³ãƒ‰ã—ã¦ã‚ã‚‹
 (defun my-what-face ()
   (interactive)
   (let ((face (or (get-char-property (point) 'read-face-name)
                   (get-char-property (point) 'face))))
     (if face (message "Face: %s" face) (message "No face at %d" (point)))))
 
-;; eshell©g‚Ícolor‚É‘Î‰‚µ‚Ä‚¢‚é
-;; git‚Í‘½•ªƒ^[ƒ~ƒiƒ‹‚ÉÚ‘±‚³‚ê‚Ä‚¢‚È‚¢‚ÆƒfƒtƒHƒ‹ƒg‚Å‚ÍF‚ğo—Í‚µ‚È‚¢‚İ‚½‚¢
-;; ‚¾‚©‚çeshell‚ÉF‚ª‚Â‚©‚È‚©‚Á‚½
+;; eshellè‡ªèº«ã¯colorã«å¯¾å¿œã—ã¦ã„ã‚‹
+;; gitã¯å¤šåˆ†ã‚¿ãƒ¼ãƒŸãƒŠãƒ«ã«æ¥ç¶šã•ã‚Œã¦ã„ãªã„ã¨ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ã¯è‰²ã‚’å‡ºåŠ›ã—ãªã„ã¿ãŸã„
+;; ã ã‹ã‚‰eshellã«è‰²ãŒã¤ã‹ãªã‹ã£ãŸ
 ;; (require 'ansi-color)
 ;; (defun my-eshell-handle-ansi-color ()
 ;;   (ansi-color-apply-on-region eshell-last-output-start eshell-last-output-end))
 ;; (add-to-list 'eshell-output-filter-functions 'my-eshell-handle-ansi-color)
 
 ;;=======================================
-;;MYƒJƒXƒ^ƒ€‹N“®‰æ–Ê
+;;MYã‚«ã‚¹ã‚¿ãƒ èµ·å‹•ç”»é¢
 ;;=======================================
 (eyebrowse-switch-to-window-config-9)
 (find-file "~/todo.org")
@@ -780,7 +781,7 @@
 
 
 
-;; skk‚Æslime‚ÌƒXƒy[ƒX‚Ì–â‘è‚ğ‰ğŒˆ‚·‚é 
+;; skkã¨slimeã®ã‚¹ãƒšãƒ¼ã‚¹ã®å•é¡Œã‚’è§£æ±ºã™ã‚‹ 
 ;(defun skk-slime-space-insert (n) 
 ;  (interactive "p") 
 ;  (if skk-henkan-mode (skk-insert) (slime-space n))) 
@@ -791,5 +792,5 @@
 ;	  (lambda() 
 ;	    (define-key slime-repl-mode-map " " 'skk-slime-space-insert))) 
 ; 
-;;;;‚Ç‚¤‚â‚Á‚Ä‚à‹£‡‚ğ‰ğŒˆ‚Å‚«‚È‚©‚Á‚½‚Ì‚Å 
-;;;;slime.el‚ğè‚ÅC³‚µ‚ÄƒL[ƒoƒCƒ“ƒh‚ğƒRƒƒ“ƒgƒAƒEƒg‚µ‚½ 
+;;;;ã©ã†ã‚„ã£ã¦ã‚‚ç«¶åˆã‚’è§£æ±ºã§ããªã‹ã£ãŸã®ã§ 
+;;;;slime.elã‚’æ‰‹ã§ä¿®æ­£ã—ã¦ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ã‚’ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ãŸ 
