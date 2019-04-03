@@ -8,7 +8,99 @@
 (add-to-list 'load-path "~/.emacs.d/haru-pack/typescript-mode")
 (add-to-list 'load-path "~/.emacs.d/haru-pack/ng2-mode")
 (add-to-list 'load-path "~/.emacs.d/haru-pack")
+(add-to-list 'load-path "~/.emacs.d/haru-pack/tide")
+(add-to-list 'load-path "~/.emacs.d/haru-pack/tide/tsserver")
+(add-to-list 'load-path "~/.emacs.d/haru-pack/powerline")
+(add-to-list 'load-path "~/.emacs.d/haru-pack/ddskk")
 (add-to-list 'load-path "~/.emacs.d/haru")
+
+(menu-bar-mode 0)
+
+;;;;ddskkを開始する
+;; minibufferでも「C-x C-j」でskkを起動するとminibufferでも日本語が入力出来ます
+(require 'skk-autoloads)
+(require 'skk-cus)
+(require 'ccc)
+(require 'skk)
+;; これはまっ先にやらないとダメみたい
+(define-key minibuffer-local-map (kbd "C-j") 'skk-kakutei)
+;; (skk-mode)
+;;;;lで半角
+;;;;C-jで全角かな(C-jがlisp-interaction-modeでeval-print-last-sexpに割り当てられていて上書きする事に注意)
+;;;;全角かな時にqで全角カナ
+;;;;全角カナ or 全角かな時にLで全角英字
+;;;;変換時にqでもカナになる
+;;;;変換時の前候補はxキーです
+;;;;;;送り仮名「動く」の場合「UgoKu」の様に仮名の始めの文字をShift Keyを押しながら打鍵する
+
+;; ddskkのtar.gzをダウンロードする
+;; 解凍する
+;; 以下より辞書をダウンロードする
+;;   http://openlab.jp/skk/dic/SKK-JISYO.L.gz
+;; 解凍したフォルダのdicフォルダに解凍した辞書をコピーする
+;; makeit.batをmymakeit.batに別名コピーする
+;; mymakeit.batを編集する(HOMEとEMACSのみ編集)
+;;   set PREFIX=%HOME%
+;;   set EMACS=c:\ueno\tool\NTemacs\emacs\bin\emacs.exe
+;; SKK-CFGに3行追加
+;;   (setq SKK_LISPDIR "C:/users/cats-kai-053/.emacs.d/haru-pack/ddskk")
+;;   (setq SKK_INFODIR "C:/users/cats-kai-053/.emacs.d/info/ddskk")
+;;   (setq SKK_DATADIR "C:/users/cats-kai-053/.emacs.d/haru-pack/ddskk/data")
+;; mymakeit.bat what-whereでインストール場所を確認
+;; mymakeit.bat installでインストール
+
+
+
+
+;;=======================================
+;;power line
+;;=======================================
+;; (require 'powerline)
+;; (powerline-center-evil-theme)
+;; (powerline-default-theme)
+;; (powerline-default-theme)
+
+;; (set-face-attribute 'mode-line nil
+;;                     :foreground "#fff"
+;;                     :background "#FF0066"
+;;                    :box nil)
+
+;; (set-face-attribute 'powerline-active1 nil
+;;                     :foreground "#fff"
+;;                     :background "#FF6699"
+;;                     :inherit 'mode-line)
+
+;; (set-face-attribute 'powerline-active2 nil
+;;                     :foreground "#000"
+;;                     :background "#ffaeb9"
+;;                     :inherit 'mode-line)
+
+;;=======================================
+;;ace window
+;;=======================================
+(require 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(custom-set-faces
+ '(aw-leading-char-face
+   ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+
+;;=======================================
+;;rainbow delimiter
+;;=======================================
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+;; 括弧の色を強調する設定
+(require 'cl-lib)
+(require 'color)
+(defun rainbow-delimiters-using-stronger-colors ()
+  (interactive)
+  (cl-loop
+   for index from 1 to rainbow-delimiters-max-face-count
+   do
+   (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
+    (cl-callf color-saturate-name (face-foreground face) 30))))
+(add-hook 'emacs-startup-hook 'rainbow-delimiters-using-stronger-colors)
 
 
 ;; 初期化時間計測用
@@ -17,10 +109,59 @@
 ;; (initchart-record-execution-time-of load file)
 ;; (initchart-record-execution-time-of require feature)
 
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+
+
 ;;(global-linum-mode t)
 (require 'nlinum)
 (global-nlinum-mode t)
 
+(require 'hilit-chg)
+(global-highlight-changes-mode 1)
+
+(defvar highlight-fringe-mark 'filled-square
+    "The fringe bitmap name marked at changed line.
+    Should be selected from `fringe-bitmaps'.")
+
+(defadvice hilit-chg-make-ov (after hilit-chg-add-fringe activate)
+    (mapc (lambda (ov)
+        (if (overlay-get ov 'hilit-chg)
+        (let ((fringe-anchor (make-string 1 ?x)))
+            (put-text-property 0 1 'display
+                (list 'left-fringe highlight-fringe-mark)
+                fringe-anchor)
+            (overlay-put ov 'before-string fringe-anchor))
+        ))
+        (overlays-at (ad-get-arg 1))))
+(set-face-attribute 'highlight-changes nil :foreground nil :background nil :underline nil)
+(set-face-attribute 'highlight-changes-delete nil :foreground nil :background nil  :underline nil)
+
+;; 保存後にハイライトを削除
+;; (add-hook 'after-save-hook
+;;           (lambda ()
+;;             (when highlight-changes-mode
+;;               (save-restriction
+;;                 (widen)
+;;                 (highlight-changes-remove-highlight (point-min) (point-max))))))
+
+;; 以下はハイライトのfaceを変更する方法
+;; (make-empty-face 'highlight-changes-saved-face)
+;; (set-face-attribute 'highlight-changes-saved-face nil :foreground nil :background "#151500" :underline nil)
+;; (set-face-attribute 'highlight-changes nil :foreground nil :background "#002200" :underline nil)
+;; ;;(set-face-attribute 'highlight-changes-delete nil :foreground nil :background nil  :underline t)
+;; (setq highlight-changes-face-list '(highlight-changes-saved-face))
+;; (defun DE-highlight-changes-rotate-faces ()
+;;   (let ((toggle (eq highlight-changes-mode 'passive)))
+;;     (when toggle (highlight-changes-mode t))
+;;     (highlight-changes-rotate-faces)
+;;     (when toggle (highlight-changes-mode nil))))
+;; (add-hook 'local-write-file-hooks 'DE-highlight-changes-rotate-faces)
+
+(defun my-remove-highlight ()
+    (interactive)
+    (highlight-changes-mode 'toggle)
+    (highlight-changes-mode 'toggle))
 
 ;;C-x, C-fのfind-fileのdefault directoryを"~/"にする
 (setq default-directory "~/")
@@ -28,13 +169,15 @@
 
 ;; character code 設定
 (set-keyboard-coding-system 'utf-8)
- 
+
 (prefer-coding-system 'utf-8-dos)
 ;;(prefer-coding-system 'utf-8-unix)
- 
+
 (set-file-name-coding-system 'utf-8)
 (setq default-process-coding-system '(utf-8 . utf-8))
+;;(setq default-process-coding-system '(cp932 . cp932))
 
+;;(setenv "LANG" "ja_JP.CP932")
 
 ;ctrl-uをevilに食わす
 (setq-default evil-want-C-u-scroll t)
@@ -47,7 +190,7 @@
 (require 'evil)
 (evil-mode 1)
 ;;evil-normal stateでIMEをOFFする
-(add-hook 'evil-normal-state-entry-hook 'ime-force-off)
+;;(add-hook 'evil-normal-state-entry-hook 'ime-force-off)
 
 (require 'evil-search-highlight-persist)
 (evil-search-highlight-persist)
@@ -73,16 +216,16 @@
 ;; busybox grepからripgrepに乗り換え
 ;; (setq howm-view-use-grep t) ;[buxybox grep %1 %2...]なbatをwindowsフォルダに置いておく
 
-(setq howm-view-use-grep t)
-(setq howm-view-grep-command "rg") ;rg.exeをwindowsフォルダに置いておく
-(setq howm-view-grep-option "-nH --no-heading --color never")
-(setq howm-view-grep-extended-option nil)
-(setq howm-view-grep-fixed-option "-F")
-(setq howm-view-grep-expr-option nil)
-(setq howm-view-grep-file-stdin-option nil)
+;; (setq howm-view-use-grep t)
+;; (setq howm-view-grep-command "rg") ;rg.exeをwindowsフォルダに置いておく
+;; (setq howm-view-grep-option "-nH --no-heading --color never")
+;; (setq howm-view-grep-extended-option nil)
+;; (setq howm-view-grep-fixed-option "-F")
+;; (setq howm-view-grep-expr-option nil)
+;; (setq howm-view-grep-file-stdin-option nil)
 
 (setq howm-menu-lang 'ja)
-(require 'howm-mode)
+(require 'howm)
 
 (setq howm-file-name-format "%Y/%m/%Y_%m_%d_%H%M%S.org") ; 1 日 1 ファイル
 (setq howm-keyword-case-fold-search t) ; <<< で大文字小文字を区別しない
@@ -94,7 +237,8 @@
 (require 'calfw-org)
 
 ;; MyWGetはc:\windowsに置いておく（pathが通ってればどこでも良いよ）
-(setq cfw:ical-calendar-external-shell-command "MyWGet -u nmoc\\8010973 -p CatsVer308 ")
+;;(setq cfw:ical-calendar-external-shell-command "MyWGet -u nmoc\\8010973 -p CatsVer308 ")
+(setq cfw:ical-calendar-external-shell-command "wget -q --no-check-certificate -O - ")
 (setq cfw:ical-url-to-buffer-get 'cfw:ical-url-to-buffer-external)
 ;; 月
 (setq calendar-month-name-array
@@ -135,10 +279,10 @@
 ;; まだよくわかってないので
 ;; https://docs.projectile.mx/en/latest/
 ;; (require 'projectile)
-(require 'counsel-projectile)
+;; (require 'counsel-projectile)
 ;; C-c pに続けて何か入力すると良いっぽい
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
-(setq projectile-indexing-method 'native)
+;; (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+;; (setq projectile-indexing-method 'native)
 ;; (setq projectile-indexing-method 'hybrid)  ; windowsじゃ動かない
 ;; (setq projectile-indexing-method 'alien)   ; windowsじゃ動かない
 ;; M-x counsel-projectile-mode
@@ -246,17 +390,17 @@
 
 
 (require 'org)
-(setq org-fast-todo-selection t)
+(setq org-fast-todo-selection t) ;C-c C-tでTODOにする
 ;(setq org-todo-keywords
 ;      '((sequence "TODO(t)" "STARTED(s)" "WAITING(w)" "|" "Done(x)" "CANCEL(c)")))
 (setq org-todo-keywords
 	'((sequence "TODO" "STARTED" "WAITING" "|" "Done" "CANCEL")))
-(setq org-startup-indented t)
-(setq org-src-fontify-natively t)
+(setq org-startup-indented t) ;orgのインデントの表示
+(setq org-src-fontify-natively t) ;#+BEGIN_SRC内の色付け
 
 ;;(add-to-list 'custom-theme-load-path (file-name-as-directory "~/.emacs.d/mycolor"))
 (setq-default line-spacing 2)
-(set-frame-font "ＭＳ ゴシック-9")
+;; (set-frame-font "ＭＳ ゴシック-9")
 
 (setq org-agenda-files (list "~/todo.org" "~/work.org"))
 
@@ -278,6 +422,10 @@
 ;;#+STARTUP: logdone
 (setq org-log-done 'time)
 
+;;export時にセクションに番号を付与しない
+;;or
+;;#+OPTIONS: nul:nil
+(setq org-export-with-section-numbers 2)
 
 ;;=======================================
 ;;popup
@@ -293,25 +441,27 @@
 (require 'dired+)
 (require 'dired-toggle)
 
-(defun w32-browser (doc) (w32-shell-execute 1 doc))
-(eval-after-load "dired" '(define-key dired-mode-map [f3]
-                            (lambda ()
-                              (interactive)
-                              (w32-browser (dired-replace-in-string "/" "\\" (dired-get-filename))))))
+;; (defun w32-browser (doc) (w32-shell-execute 1 doc))
+;; (eval-after-load "dired" '(define-key dired-mode-map [f3]
+;;                             (lambda ()
+;;                               (interactive)
+;;                               (w32-browser (dired-replace-in-string "/" "\\" (dired-get-filename))))))
 (defun dired-exec-explorer ()
 "In dired, execute Explorer"
 (interactive)
 (explorer (dired-current-directory)))
 
-(defun my-gvim-on-dired ()
-  "open gvim from dired"
-  (interactive)
-  (let ((f (dired-get-filename)))
+;; (defun my-gvim-on-dired ()
+;;   "open gvim from dired"
+;;   (interactive)
+;;   (let ((f (dired-get-filename)))
 	;;NTEmacsとvimで$HOMEが異なるので_gvimrcを指定して開く
-	(w32-shell-execute "open" "gvim" (concat "-U ~/../../_gvimrc " f))
-	))
+;; 	(w32-shell-execute "open" "gvim" (concat "-U ~/../../_gvimrc " f))
+;; 	))
 
 (setq dired-recursive-copies 'always)
+
+(setq dired-toggle-window-size 32)
 ;;=======================================
 ;;関数定義
 ;;=======================================
@@ -345,17 +495,17 @@
                (throw 'end-flag t)))))))
 
 ;;exploreを開く
-(defun explorer (&optional path)
-"引数があれば引数の、省略されていれば現在のバッファをexplorerで開く"
-(interactive)
-(setq path (expand-file-name (or path (buffer-file-name))))
-(cond
-	((not (file-exists-p path))
-	(message "path %s isn't exist" path))
-	(t
-	(let ((dos-path (replace-regexp-in-string "/" "\\\\" path)))
+;; (defun explorer (&optional path)
+;; "引数があれば引数の、省略されていれば現在のバッファをexplorerで開く"
+;; (interactive)
+;; (setq path (expand-file-name (or path (buffer-file-name))))
+;; (cond
+;; 	((not (file-exists-p path))
+;; 	(message "path %s isn't exist" path))
+;; 	(t
+;; 	(let ((dos-path (replace-regexp-in-string "/" "\\\\" path)))
 	;;(w32-shell-execute "open" "explorer.exe" (concat "/select," dos-path))))))
-	(w32-shell-execute "open" "explorer.exe" dos-path)))))
+;; 	(w32-shell-execute "open" "explorer.exe" dos-path)))))
 
 
 ;;カレンダー
@@ -373,7 +523,8 @@
     ;;(cfw:ical-create-source "gcal" "https://..../basic.ics" "IndianRed") ; google calendar ICS)
     )))
 
-(w32-shell-execute "open" "C:\\ueno\\prog\\OrgNotification\\OrgNotification.exe" )
+;; (w32-shell-execute "open" "C:\\ueno\\prog\\OrgNotification\\OrgNotification.exe" )
+;; (w32-shell-execute "open" "c:\\Users\\cats-kai-053\\AppData\\Roaming\\npm\\node_modules\\electron\\dist\\electron.exe" "C:\\ueno\\src\\electron\\pomodoro" )
 
 ;;空ファイルを作成する
 (defun mytouch (fname)
@@ -383,16 +534,16 @@
 	  (progn (start-process "mytouch" nil "c:\\ueno\\touch.cmd" fname)
 			 (revert-buffer))))
 
-(defun mypopup ()
-  "test of popup-menu"
-  (interactive)
-  (let ((m (popup-cascade-menu '(Conemu-Here Explorer Close) )))
-	(cond ((eq m 'Conemu-Here)
-		   (let ((x (file-name-directory (buffer-file-name))))
-			 (w32-shell-execute "open" "conemu" (concat "-dir " (file-name-directory (buffer-file-name))))))
-		  ((eq m 'Explorer)
-		   (let ((x (file-name-directory (buffer-file-name))))
-			 (explorer x))))))
+;; (defun mypopup ()
+;;   "test of popup-menu"
+;;   (interactive)
+;;   (let ((m (popup-cascade-menu '(Conemu-Here Explorer Close) )))
+;; 	(cond ((eq m 'Conemu-Here)
+;; 		   (let ((x (file-name-directory (buffer-file-name))))
+;; 			 (w32-shell-execute "open" "conemu" (concat "-dir " (file-name-directory (buffer-file-name))))))
+;; 		  ((eq m 'Explorer)
+;; 		   (let ((x (file-name-directory (buffer-file-name))))
+;; 			 (explorer x))))))
 
 
 ;;=======================================
@@ -421,7 +572,7 @@
 ;;=======================================
 ;; フォント
 ;;=======================================
-(set-frame-font "ＭＳ ゴシック-9")
+;; (set-frame-font "ＭＳ ゴシック-9")
 
 ;;;;バックアップを作らない
 (setq make-backup-files nil)
@@ -480,22 +631,6 @@
       (list file))))
 
 
-
-;;=======================================
-;;キーボード
-;;=======================================
-;;;; dired-find-alternate-file の有効化
-(put 'dired-find-alternate-file 'disabled nil)
-;;;; RET 標準の dired-find-file では dired バッファが複数作られるので
-;;;; dired-find-alternate-file を代わりに使う
-(define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
-(define-key dired-mode-map (kbd "a") 'dired-find-file)
-(evil-define-key 'normal dired-mode-map (kbd "n") 'evil-search-next)
-(evil-define-key 'normal dired-mode-map (kbd "N") 'evil-search-previous)
-(evil-define-key 'normal dired-mode-map (kbd "gt") 'eyebrowse-next-window-config)
-(evil-define-key 'normal dired-mode-map (kbd "gT") 'eyebrowse-prev-window-config)
-
-
 (eval-after-load 'evil-ex
     '(progn
 	(evil-ex-define-cmd "taba" 'eyebrowse-switch-to-window-config-1)
@@ -520,6 +655,7 @@
 (define-key company-active-map (kbd "C-k") 'company-abort)
 (define-key global-map (kbd "C-SPC") 'company-complete)
 
+(define-key evil-normal-state-map " gd" 'tide-jump-to-definition)
 (define-key evil-normal-state-map " rr" 'recentf-find-file)
 (define-key evil-normal-state-map " ff" 'counsel-find-file)
 (define-key evil-normal-state-map " bb" 'switch-to-buffer)  ;; C-x bでも良い
@@ -528,8 +664,12 @@
 (define-key evil-normal-state-map " ch" 'counsel-command-history)
 (define-key evil-normal-state-map "  x" 'counsel-M-x)
 (define-key evil-normal-state-map " dt" 'dired-toggle)
+(define-key evil-normal-state-map " wf" 'my-what-face)
+(define-key evil-normal-state-map " oa" (lambda () (interactive) (org-agenda nil "n")))
+(define-key evil-normal-state-map " aw" 'ace-window)
 
 (global-set-key [C-tab] 'other-window)
+(global-set-key (kbd "C-x C-j") 'skk-mode)
 
 ;; emacsステートに対して
 (define-key package-menu-mode-map (kbd "j") 'next-line)
@@ -543,13 +683,22 @@
 
 (define-key help-mode-map (kbd "gt") 'eyebrowse-next-window-config)
 (define-key help-mode-map (kbd "gT") 'eyebrowse-prev-window-config)
-
 ;;=======================================
 ;;typescript-mode
 ;;=======================================
 (autoload 'typescript-mode "typescript-mode" "Major mode for editing typescript code." t)
 (setq auto-mode-alist
   (append '(("\\.ts$" . typescript-mode)) auto-mode-alist))
+(setq typescript-indent-level 2)
+
+(require 'tide)
+(defun my-tide-setup ()
+  (tide-setup)
+  (flycheck-mode t)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode t)
+  (tide-hl-identifier-mode t))
+(add-hook 'typescript-mode-hook 'my-tide-setup)
 
 ;;=======================================
 ;;ng2-mode
@@ -557,6 +706,8 @@
 (autoload 'ng2-mode "ng2-mode" "Major mode for editing angular2 code." t)
 (setq auto-mode-alist
 	  (append '(("\\.component.ts$" . ng2-mode)) auto-mode-alist))
+(flycheck-add-mode 'typescript-tslint 'ng2-ts-mode)
+(flycheck-add-mode 'typescript-tide 'ng2-ts-mode)
 
 ;;=======================================
 ;;csharp-mode
@@ -580,6 +731,33 @@
 (setq omnisharp-debug t)
 
 
+(require 'xterm-color)
+(require 'eshell)
+
+(add-hook 'eshell-before-prompt-hook
+          (lambda ()
+            (setq xterm-color-preserve-properties t)))
+
+(add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
+(setq eshell-output-filter-functions (remove 'eshell-handle-ansi-color eshell-output-filter-functions))
+
+
+;; M-x経由だとミニバッファがカレントとなり(他のバッファはhiwinが有効になり)
+;; 正しいfaceが得られない為、キーボードにコマンドとしてバインドしてある
+(defun my-what-face ()
+  (interactive)
+  (let ((face (or (get-char-property (point) 'read-face-name)
+                  (get-char-property (point) 'face))))
+    (if face (message "Face: %s" face) (message "No face at %d" (point)))))
+
+;; eshell自身はcolorに対応している
+;; gitは多分ターミナルに接続されていないとデフォルトでは色を出力しないみたい
+;; だからeshellに色がつかなかった
+;; (require 'ansi-color)
+;; (defun my-eshell-handle-ansi-color ()
+;;   (ansi-color-apply-on-region eshell-last-output-start eshell-last-output-end))
+;; (add-to-list 'eshell-output-filter-functions 'my-eshell-handle-ansi-color)
+
 ;;=======================================
 ;;MYカスタム起動画面
 ;;=======================================
@@ -594,20 +772,13 @@
 (eyebrowse-switch-to-window-config-0)
 (setq inhibit-splash-screen t)
 (howm-menu)
-(org-agenda nil "n")
+(eyebrowse-switch-to-window-config-0)
+(my-open-cal)
+
+(set-frame-parameter nil 'alpha 90)
 
 
 
-
-;;;;ddskkを開始する 
-;(skk-mode) 
-;;;;lで半角 
-;;;;C-jで全角かな 
-;;;;全角かな時にqで全角カナ 
-;;;;変換時にqでもカナになる 
-;;;;変換時の前候補はxキーです 
-;; (require 'skk)
-;; (define-key minibuffer-local-map (kbd "C-j") 'skk-kakutei)
 
 ;; skkとslimeのスペースの問題を解決する 
 ;(defun skk-slime-space-insert (n) 
