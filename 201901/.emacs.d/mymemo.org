@@ -1,4 +1,83 @@
 #+STARTUP: indent inlineimages
+* misc
+** pwd
+:pwd
+M-x pwd
+** ファイル作成
+M-x evil-buffer-new
+M-: (generate-new-buffer name) ;;作るだけでスイッチしないよ
+** defvar
+もし変数が存在するなら、上書きしない
+setqによる上書きは可能である
+** setq vs setq-default
+setq-default set global value
+setq, if variable is buffer-local, set local value. if not, set global value(same as setq-default)
+** hilight-changes-mode
+変更した箇所を特別なfaceで表示
+** apropos
+函数、変数をキーワードで検索できる
+** face一覧
+M-x list-faces-display
+** フリンジ
+バッファの左右に存在するへり。色々表示できるようだ
+** カスタマイズ
+画面からカスタムして保存するとデフォルトの初期化ファイル(init.el?)に書き込まれるみたい
+(setq custom-file "file.el")
+とかしておくと、指定したファイルに書き込むみたい
+*** M-x customise
+何か開く(evil効かない事に注意)
+ツリー構造に分類されたカスタマイズ可能な項目が見える
+多分、直接カスタマイズもできると思う
+|--------------------+--------|
+| キー               | 動作   |
+|--------------------+--------|
+| Tab                | 移動   |
+| C-n, C-p, C-f, C-b | 移動   |
+| RET                | 決定   |
+| q                  | 閉じる |
+|--------------------+--------|
+*** M-x customise-apropos
+ミニバッファで検索
+*** M-x customise-browse
+ツリーをみるだけ
+* font lock mode
+マイナーモードで、既定で有効
+いくつかのfaceが定義済み
+ex. font-lock-string-face、font-lock-comment-face
+これらすべてを簡単に探す方法には、M-x customize-group RET font-lock-faces RET
+
+特定のモードでハイライトするパターンを追加するには、
+関数font-lock-add-keywordsを使うことができます。
+たとえばCコメント中の‘FIXME:’という単語をハイライトするには、以下を使います: 
+
+#+BEGIN_SRC elisp
+(add-hook 'c-mode-hook
+          (lambda ()
+           (font-lock-add-keywords nil
+            '(("\\<\\(FIXME\\):" 1
+               font-lock-warning-face t)))))
+#+END_SRC
+font-lockのハイライトパターンからキーワードを削除するには、関数font-lock-remove-keywordsを使います
+** face
+M-x set-face-foreground or set-face-backgroundでカラー変更可能
+M-x desribe-faceでfaceの情報を参照できる
+
+モードラインやツールバーの為のfaceも存在する
+
+trailing, spaces, tabs, emptyなどのfaceも存在する
+* eshell
+lispコマンドを実行できる
+(とかは省略出来てTABで保管もできる
+なので
+>find-file file-name
+でemacsでファイルを開ける
+* orgtbl-mode
+M-x orgtbl-mode
+書くメジャーモードでorg-modeのテーブル編集が
+使えるようになる！！すげー！！
+* follow-mode
+M-x follow-mode
+縦分割でスクロールが同期する
 * align-regexp
 M-x align-regexp -> =とかの文字
 * gvimとemacsのHOMEの違い
@@ -21,24 +100,36 @@ set HOME=%USERPROFILE%
   - conemu
   - explorer
 - diredでF3
-** dired
-*** installed
+* dired
+** installed
 - dired+
 - dired-toggle
-*** キー
-| key | desc                  |
-|-----+-----------------------|
-| (   | 詳細表示をトグル      |
-| o   | 別のwindowで開く      |
-| m   | mark                  |
-| u   | unmark                |
-| U   | unmark all            |
-| D   | delete marked         |
-| C   | copy marked           |
-| C   | move or rename marked |
-| +   | create dire           |
-| r   | redisplay             |
-
+** キー
+| key        | desc                  |
+|------------+-----------------------|
+| (          | 詳細表示をトグル      |
+| o          | 別のwindowで開く      |
+| m          | mark                  |
+| u          | unmark                |
+| U          | unmark all            |
+| D          | delete marked         |
+| C          | copy marked           |
+| C          | move or rename marked |
+| +          | create dire           |
+| r          | redisplay             |
+| % m regexp | mark matched all file |
+|            |                       |
+*** 任意のコマンドの実行
+just '!'
+**** unmark時
+現在のポジションを引数に追加
+**** mark時
+マークされた項目を引数に追加
+**** wsl
+「cmd.exe /c」でwindowsのcmdで実行する
+→拡張子により登録されたアプリが起動する
+** コマンド
+dired-mark-files-regexp
 
 * コメントアウト
 行を選択してM-;

@@ -12,6 +12,8 @@
 (add-to-list 'load-path "~/.emacs.d/haru-pack/tide/tsserver")
 (add-to-list 'load-path "~/.emacs.d/haru-pack/powerline")
 (add-to-list 'load-path "~/.emacs.d/haru-pack/ddskk")
+(add-to-list 'load-path "~/.emacs.d/haru-pack/haskell-mode")
+(add-to-list 'load-path "~/.emacs.d/haru-pack/cider")
 (add-to-list 'load-path "~/.emacs.d/haru")
 
 (menu-bar-mode 0)
@@ -22,6 +24,7 @@
 (require 'skk-cus)
 (require 'ccc)
 (require 'skk)
+(setq skk-show-mode-show t)
 ;; これはまっ先にやらないとダメみたい
 (define-key minibuffer-local-map (kbd "C-j") 'skk-kakutei)
 ;; (skk-mode)
@@ -75,6 +78,17 @@
 ;;                     :foreground "#000"
 ;;                     :background "#ffaeb9"
 ;;                     :inherit 'mode-line)
+
+;;=======================================
+;;haskell
+;;=======================================
+(require 'haskell)
+
+;;=======================================
+;;clojure
+;;=======================================
+(require 'clojure-mode)
+;;(require 'cider)
 
 ;;=======================================
 ;;ace window
@@ -526,6 +540,8 @@
 
 ;; (w32-shell-execute "open" "C:\\ueno\\prog\\OrgNotification\\OrgNotification.exe" )
 ;; (w32-shell-execute "open" "c:\\Users\\cats-kai-053\\AppData\\Roaming\\npm\\node_modules\\electron\\dist\\electron.exe" "C:\\ueno\\src\\electron\\pomodoro" )
+(start-process "org-notify" nil "/mnt/c/ueno/prog/OrgNotification/OrgNotification.exe")
+(start-process "pomodoro" nil "/mnt/c/Users/yueno/AppData/Roaming/npm/node_modules/electron/dist/electron.exe" "C:\\ueno\\src\\electron\\pomodoro" )
 
 ;;空ファイルを作成する
 (defun mytouch (fname)
@@ -574,6 +590,19 @@
 ;; フォント
 ;;=======================================
 ;; (set-frame-font "ＭＳ ゴシック-9")
+;; (set-frame-font "TakaoGothic-10")
+;; (add-to-list 'face-font-rescale-alist '(".*Takao P.*" . 0.85))
+; 半角英字設定
+;; (set-face-attribute 'default nil :family "Consolas" :height 100)
+(set-face-attribute 'default nil :family "TakaoGothic" :height 100)
+; 全角かな設定
+(set-fontset-font (frame-parameter nil 'font)
+                  'japanese-jisx0208
+                  (font-spec :family "TakaoGothic" :size 14))
+ ; 半角ｶﾅ設定
+(set-fontset-font (frame-parameter nil 'font)
+                  'katakana-jisx0201
+                  (font-spec :family "TakaoGothic" :size 14))
 
 ;;;;バックアップを作らない
 (setq make-backup-files nil)
@@ -684,6 +713,19 @@
 
 (define-key help-mode-map (kbd "gt") 'eyebrowse-next-window-config)
 (define-key help-mode-map (kbd "gT") 'eyebrowse-prev-window-config)
+
+(defun my-open-below-with-normal ()
+  (interactive)
+  (evil-insert 0)
+  (newline)
+  (evil-normal-state))
+(define-key evil-normal-state-map (kbd "RET") 'my-open-below-with-normal)
+
+;; (defun my-pop-skk-sate ()
+;;     (popup-tip "hoge"))
+;; (add-hook 'evil-insert-state-entry-hook
+;;     'my-pop-skk-sate)
+
 ;;=======================================
 ;;typescript-mode
 ;;=======================================
